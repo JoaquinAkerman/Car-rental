@@ -1,6 +1,5 @@
 import sqlite3 from "sqlite3";
 
-
 /**
  * Initializes the database with the provided database path.
  *

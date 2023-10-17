@@ -12,7 +12,6 @@ nunjucks.configure("views", {
 });
 
 app.get("/cars", (req, res) => {
-  console.log("fetching cars from app.js");
   const carGetController = container.get("CarGetController");
   carGetController.getCars(req, res);
 });
