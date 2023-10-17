@@ -1,31 +1,20 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
-
-const express = require("express");
-const nunjucks = require("nunjucks");
-const initDatabase = require("./src/config/dbConfig.js"); 
+import express from "express";
+import nunjucks from "nunjucks";
+import configureDI from "./src/containers/container.js";
 
 const app = express();
-
-// Database config
-const dbConfig = process.env.DB_PATH;
-console.log(process.env.TEST)
-const db = initDatabase(dbConfig); 
-
-// Configure Nunjucks
+const container = configureDI();
 nunjucks.configure("views", {
   autoescape: true,
   express: app,
 });
 
-app.get("/", (req, res) => {
-  db.all("SELECT * FROM cars", (err, rows) => {
-    if (err) {
-      console.error(err.message);
-    } else {
-      res.render("index.html", { cars: rows });
-    }
-  });
+app.get("/cars", (req, res) => {
+  console.log("fetching cars from app.js");
+  const carGetController = container.get("CarGetController");
+  carGetController.getCars(req, res);
 });
 
 const PORT = process.env.PORT || 3000;

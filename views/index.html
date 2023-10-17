@@ -16,10 +16,10 @@
     <title>Car List</title>
 </head>
 <body>
-    <h1>Car List</h1>
-    <ul>
-        {% for car in cars %}
-            <li>
+    <h1>Car List </h1>
+    <ul >     
+           {% for car in cars %}
+            <li style="border: 1px solid #000; padding: 10px;">
                 <strong>Brand:</strong> {{ car.brand }}<br>
                 <strong>Model:</strong> {{ car.model }}<br>
                 <strong>Year:</strong> {{ car.year }}<br>

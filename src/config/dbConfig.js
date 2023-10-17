@@ -1,6 +1,12 @@
-const sqlite3 = require('sqlite3').verbose();
+import sqlite3 from "sqlite3";
 
-// Database configuration 
+
+/**
+ * Initializes the database with the provided database path.
+ *
+ * @param {string} dbPath - The path to the database file.
+ * @return {object} - The initialized database object.
+ */
 function initDatabase(dbPath) {
   const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
@@ -13,4 +19,4 @@ function initDatabase(dbPath) {
   return db;
 }
 
-module.exports = initDatabase;
+export default initDatabase;
