@@ -1,22 +1,26 @@
+
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import nunjucks from "nunjucks";
-import configureDI from "./src/containers/container.js";
+
+import configureDI from "./src/carsModel/container/container.js";
 
 const app = express();
-const container = configureDI();
+app.set('view engine', 'njk');
+const port = process.env.PORT || 3000;
 nunjucks.configure("views", {
   autoescape: true,
   express: app,
 });
 
-app.get("/cars", (req, res) => {
-  const carGetController = container.get("CarGetController");
-  carGetController.getCars(req, res);
-});
+const container = configureDI();
+const { CarGetController } = container;
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+// Register the routes
+CarGetController.registerRoutes(app);
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
 });
