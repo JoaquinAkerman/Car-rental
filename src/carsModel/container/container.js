@@ -1,20 +1,26 @@
-import { DIContainer } from "rsdi";
 import dotenv from "dotenv";
-dotenv.config("../../.env");
+import { DIContainer } from "rsdi";
+import sqlite3 from "sqlite3";
 
-console.log(process.env.TEST, "<----test from container");
-
-import CarGetController from "../controllers/CarGetController.js";
-import CarGetService from "../servicesLayer/CarGetServices.js";
+import CarController from "../controllers/CarController.js";
+import CarGetService from "../servicesLayer/CarGetService.js";
 import CarRepository from "../repositoryLayer/CarRepository.js";
 
+dotenv.config("../../.env");
+const db = new sqlite3.Database(process.env.DB_PATH);
+
 export default function configureDI() {
-    const dbPath = process.env.DB_PATH;
-    const container = new DIContainer();
-  
-    container.add("CarGetController", ({ CarGetService }) => new CarGetController(CarGetService));
-    container.add("CarRepository", () => new CarRepository(dbPath));
-    container.add("CarGetService", ({ CarRepository }) => new CarGetService(CarRepository));
-  
-    return container;
-  }
+  const container = new DIContainer();
+
+  container.add(
+    "CarController",
+    ({ CarGetService }) => new CarController(CarGetService)
+  );
+  container.add("CarRepository", () => new CarRepository(db));
+  container.add(
+    "CarGetService",
+    ({ CarRepository }) => new CarGetService(CarRepository)
+  );
+
+  return container;
+}

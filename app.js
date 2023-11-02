@@ -15,10 +15,11 @@ nunjucks.configure("views", {
 });
 
 const container = configureDI();
-const { CarGetController } = container;
+const { CarController } = container;
+
 
 // Register the routes
-CarGetController.registerRoutes(app);
+CarController.registerRoutes(app);
 
 // Start the server
 app.listen(port, () => {
