@@ -17,7 +17,6 @@ nunjucks.configure("views", {
 const container = configureDI();
 const { CarController } = container;
 
-
 // Register the routes
 CarController.registerRoutes(app);
 
