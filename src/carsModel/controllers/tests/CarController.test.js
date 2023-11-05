@@ -19,6 +19,7 @@ describe("CarController", () => {
     expressNunjucks(app, { watch: isDev, noCache: isDev });
     carController.registerRoutes(app);
   });
+  
 
   it("should render cars view", async () => {
     const mockCars = [

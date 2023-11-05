@@ -1,22 +1,30 @@
-
 import dotenv from "dotenv";
 dotenv.config();
+import bodyParser from "body-parser";
 import express from "express";
 import nunjucks from "nunjucks";
 
 import configureDI from "./src/carsModel/container/container.js";
 
 const app = express();
-app.set('view engine', 'njk');
+app.set("view engine", "njk");
+const viewsPath = "./views";
 const port = process.env.PORT || 3000;
-nunjucks.configure("views", {
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+nunjucks.configure(viewsPath, {
   autoescape: true,
   express: app,
+  noCache: true,
+  watch: true,
 });
-
 const container = configureDI();
 const { CarController } = container;
-
+//
 // Register the routes
 CarController.registerRoutes(app);
 
