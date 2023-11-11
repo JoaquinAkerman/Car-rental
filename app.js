@@ -3,18 +3,22 @@ dotenv.config();
 import bodyParser from "body-parser";
 import express from "express";
 import nunjucks from "nunjucks";
+import session from "express-session";
 
 import configureDI from "./src/carsModel/container/container.js";
+import registerRoutes from "./src/routes/routes.js";
 
 const app = express();
 app.set("view engine", "njk");
 const viewsPath = "./views";
-const port = process.env.PORT || 3000;
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
 app.use(bodyParser.json());
+app.use(session({
+  secret: process.env.SECRET, 
+  resave: false,
+  saveUninitialized: true,
+}));
+const port = process.env.PORT || 3000;
 
 nunjucks.configure(viewsPath, {
   autoescape: true,
@@ -22,11 +26,13 @@ nunjucks.configure(viewsPath, {
   noCache: true,
   watch: true,
 });
+
 const container = configureDI();
-const { CarController } = container;
-//
-// Register the routes
-CarController.registerRoutes(app);
+const controllers = [
+  container.get('CarController'),
+  container.get('AuthController'),
+];
+registerRoutes(app, controllers);
 
 // Start the server
 app.listen(port, () => {

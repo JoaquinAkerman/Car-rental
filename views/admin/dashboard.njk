@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Mileage</th>
+                <th>Color</th>
+                <th>Air Conditioning</th>
+                <th>Passengers</th>
+                <th>Transmission</th>
+                <th>Panoramic Sunroof</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+            <tr>
+                <td>{{ car.brand }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.mileage }}</td>
+                <td>{{ car.color }}</td>
+                <td>{{ car.air_conditioning }}</td>
+                <td>{{ car.passengers }}</td>
+                <td>{{ car.transmission }}</td>
+                <td>{{ car.panoramic_sunroof }}</td>
+                <td>
+                    <a href="/admin/edit/{{ car.id }}">Edit</a> |
+                    <a href="/admin/delete/{{ car.id }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/admin/add">Add New Car</a>
+</body>
+</html>
