@@ -19,7 +19,6 @@ describe("CarController", () => {
     expressNunjucks(app, { watch: isDev, noCache: isDev });
     carController.registerRoutes(app);
   });
-  
 
   it("should render cars view", async () => {
     const mockCars = [
@@ -77,6 +76,54 @@ describe("CarController", () => {
     carGetServiceMock.getAllCars.mockRejectedValue(new Error("Database error"));
 
     const response = await supertest(app).get("/cars");
+
+    expect(response.status).toBe(500);
+    expect(response.text).toBe("Internal server error");
+  });
+
+  it("should render admin view", async () => {
+    const mockCars = [
+      {
+        id: 1,
+        brand: "Test Brand",
+        model: "Test Model 1",
+        year: "Test Year",
+        mileage: "Test Mileage",
+        color: "Test Color",
+        air_conditioning: "Test AC",
+        passengers: "Test Passengers",
+        transmission: "Test Transmission",
+        panoramic_sunroof: "Test Sunroof",
+      },
+
+      { id: 2, brand: "Car 2", model: "Model 2", year: 2021 },
+    ];
+
+    carGetServiceMock.getAllCars.mockResolvedValue(mockCars);
+
+    const response = await supertest(app).get("/admin/dashboard");
+
+    expect(response.status).toBe(200);
+    expect(response.text).toContain(`<td>${mockCars[0].brand}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].model}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].year}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].mileage}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].color}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].air_conditioning}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].passengers}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[0].transmission}</td>`);
+    expect(response.text).toContain(
+      `<td>${mockCars[0].panoramic_sunroof}</td>`
+    );
+    expect(response.text).toContain(`<td>${mockCars[1].brand}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[1].model}</td>`);
+    expect(response.text).toContain(`<td>${mockCars[1].year}</td>`);
+  });
+
+  it("should return 500 if there is a problem getting cars for admin view", async () => {
+    carGetServiceMock.getAllCars.mockRejectedValue(new Error("Database error"));
+
+    const response = await supertest(app).get("/admin/dashboard");
 
     expect(response.status).toBe(500);
     expect(response.text).toBe("Internal server error");
