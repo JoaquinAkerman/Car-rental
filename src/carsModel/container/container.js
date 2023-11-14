@@ -1,4 +1,3 @@
-// container.js
 import dotenv from "dotenv";
 import { DIContainer } from "rsdi";
 import sqlite3 from "sqlite3";
@@ -12,6 +11,11 @@ import AuthController from "../controllers/AuthController.js";
 dotenv.config("../../.env");
 const db = new sqlite3.Database(process.env.DB_PATH);
 
+/**
+ * Configures the dependency injection container.
+ *
+ * @return {DIContainer} The configured DI container.
+ */
 export default function configureDI() {
   const container = new DIContainer();
 
