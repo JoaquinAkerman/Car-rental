@@ -48,3 +48,46 @@ describe("CarRepository", () => {
     );
   });
 });
+
+describe("CarRepository", () => {
+  describe("getCarById", () => {
+    it("should return the car with the given id", async () => {
+      const db = {
+        get: jest.fn((query, params, callback) => {
+          callback(null, { id: 1, name: "Car 1" });
+        }),
+      };
+      const carRepository = new CarRepository(db);
+      const id = 1;
+
+      const car = await carRepository.getCarById(id);
+
+      expect(db.get).toHaveBeenCalledWith(
+        "SELECT * FROM cars WHERE id = ?",
+        [id],
+        expect.any(Function)
+      );
+      expect(car).toEqual({ id: 1, name: "Car 1" });
+    });
+
+    it("should throw an error if there is a database error", async () => {
+      const db = {
+        get: jest.fn((query, params, callback) => {
+          callback(new Error("Database error"));
+        }),
+      };
+      const carRepository = new CarRepository(db);
+      const id = 1;
+
+      await expect(carRepository.getCarById(id)).rejects.toThrow(
+       `Error getting car with id ${id}`
+      );
+      expect(db.get).toHaveBeenCalledWith(
+        "SELECT * FROM cars WHERE id = ?",
+        [id],
+        expect.any(Function)
+      );
+    });
+  });
+});
+

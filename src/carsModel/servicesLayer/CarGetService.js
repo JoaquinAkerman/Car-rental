@@ -13,6 +13,16 @@ class CarGetService {
       throw new Error('Error getting cars');
     } 
   }
+
+  async getCarById(id) {
+    try {
+      const car = await this.CarRepository.getCarById(id);
+      return car;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error getting car');
+    } 
+  }
 }
 
 export default CarGetService;

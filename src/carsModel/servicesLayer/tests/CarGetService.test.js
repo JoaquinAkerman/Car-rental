@@ -31,3 +31,37 @@ describe("CarGetService", () => {
     expect(carRepositoryMock.getAllCars).toHaveBeenCalled();
   });
 });
+
+
+describe('CarGetService', () => {
+  describe('getCarById', () => {
+    it('should return the car with the given id', async () => {
+      // Arrange
+      const CarRepository = {
+        getCarById: jest.fn().mockResolvedValue({ id: 1, name: 'Car 1' }),
+      };
+      const carGetService = new CarGetService(CarRepository);
+      const id = 1;
+
+      // Act
+      const car = await carGetService.getCarById(id);
+
+      // Assert
+      expect(CarRepository.getCarById).toHaveBeenCalledWith(id);
+      expect(car).toEqual({ id: 1, name: 'Car 1' });
+    });
+
+    it('should throw an error if there is a repository error', async () => {
+      // Arrange
+      const CarRepository = {
+        getCarById: jest.fn().mockRejectedValue(new Error("Error getting car")),
+      };
+      const carGetService = new CarGetService(CarRepository);
+      const id = 1;
+
+      // Act and Assert
+      await expect(carGetService.getCarById(id)).rejects.toThrow("Error getting car");
+      expect(CarRepository.getCarById).toHaveBeenCalledWith(id);
+    });
+  });
+});

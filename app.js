@@ -8,6 +8,8 @@ import session from "express-session";
 import configureDI from "./src/carsModel/container/container.js";
 import registerRoutes from "./src/routes/routes.js";
 
+
+// Setup express
 const app = express();
 app.set("view engine", "njk");
 const viewsPath = "./views";
@@ -20,6 +22,7 @@ app.use(session({
 }));
 const port = process.env.PORT || 3000;
 
+// Setup nunjucks
 nunjucks.configure(viewsPath, {
   autoescape: true,
   express: app,
@@ -27,6 +30,7 @@ nunjucks.configure(viewsPath, {
   watch: true,
 });
 
+// Setup routes
 const container = configureDI();
 const controllers = [
   container.get('CarController'),
@@ -38,3 +42,4 @@ registerRoutes(app, controllers);
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+//

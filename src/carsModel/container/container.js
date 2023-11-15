@@ -2,11 +2,11 @@ import dotenv from "dotenv";
 import { DIContainer } from "rsdi";
 import sqlite3 from "sqlite3";
 
+import AuthController from "../controllers/AuthController.js";
 import CarController from "../controllers/CarController.js";
+import AuthenticationService from "../servicesLayer/AuthenticationService.js";
 import CarGetService from "../servicesLayer/CarGetService.js";
 import CarRepository from "../repositoryLayer/CarRepository.js";
-import AuthenticationService from "../servicesLayer/AuthenticationService.js";
-import AuthController from "../controllers/AuthController.js";
 
 dotenv.config("../../.env");
 const db = new sqlite3.Database(process.env.DB_PATH);

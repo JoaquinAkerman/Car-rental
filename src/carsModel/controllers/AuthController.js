@@ -1,4 +1,9 @@
 class AuthController {
+    /**
+     * Initializes a new instance of the AuthenticationService class.
+     *
+     * @param {AuthenticationService} AuthenticationService - The authentication service.
+     */
     constructor(AuthenticationService) {
       this.authService = AuthenticationService;
     }
@@ -18,6 +23,11 @@ class AuthController {
       }
     }
   
+    /**
+     * Register the routes for the app.
+     *
+     * @param {Object} app - The Express app.
+     */
     registerRoutes(app) {
       app.get("/", (req, res) => this.renderLoginView(req, res));
       app.post("/", (req, res) => this.handleLoginFormSubmission(req, res));
