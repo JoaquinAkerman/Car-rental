@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Car</title>
+</head>
+<body>
+    <h1>Edit Car</h1>
+    <form action="/cars/{{ car.id }}" method="post">
+        <label for="brand">Brand:</label><br>
+        <input type="text" id="brand" name="brand" value="{{ car.brand }}"><br>
+        <label for="model">Model:</label><br>
+        <input type="text" id="model" name="model" value="{{ car.model }}"><br>
+        <label for="year">Year:</label><br>
+        <input type="text" id="year" name="year" value="{{ car.year }}"><br>
+        <label for="mileage">Mileage:</label><br>
+        <input type="text" id="mileage" name="mileage" value="{{ car.mileage }}"><br>
+        <label for="color">Colors:</label><br>
+        <input type="text" id="color" name="color" value="{{ car.color }}"><br>
+        <label for="air_conditioning">Air conditioning:</label><br>
+        <input type="text" id="air_conditioning" name="air_conditioning" value="{{ car.air_conditioning }}"><br>
+        <label for="passengers">Passengers:</label><br>
+        <input type="text" id="passengers" name="passengers" value="{{ car.passengers }}"><br>
+        <label for="transmission">Transmission:</label><br>
+        <input type="text" id="transmission" name="transmission" value="{{ car.transmission }}"><br>
+        <label for="panoramic_sunroof">Panoramic sunroof:</label><br>
+        <input type="text" id="panoramic_sunroof" name="panoramic_sunroof" value="{{ car.panoramic_sunroof }}"><br>
+        <input type="submit" value="Save Changes">
+    </form>
+    <a href="/admin/dashboard" style="display: inline-block; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; margin-top: 10px;">Back to Car List</a>
+</body>
+</html>

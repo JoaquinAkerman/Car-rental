@@ -1,31 +1,45 @@
-const express = require("express");
-const nunjucks = require("nunjucks");
-const app = express();
+import dotenv from "dotenv";
+dotenv.config();
+import bodyParser from "body-parser";
+import express from "express";
+import nunjucks from "nunjucks";
+import session from "express-session";
 
-// Nunjucks config
-nunjucks.configure("views", {
+import configureDI from "./src/carsModel/container/container.js";
+import registerRoutes from "./src/routes/routes.js";
+
+
+// Setup express
+const app = express();
+app.set("view engine", "njk");
+const viewsPath = "./views";
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(session({
+  secret: process.env.SECRET, 
+  resave: false,
+  saveUninitialized: true,
+}));
+const port = process.env.PORT || 3000;
+
+// Setup nunjucks
+nunjucks.configure(viewsPath, {
   autoescape: true,
   express: app,
+  noCache: true,
+  watch: true,
 });
 
-//Express config
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+// Setup routes
+const container = configureDI();
+const controllers = [
+  container.get('CarController'),
+  container.get('AuthController'),
+];
+registerRoutes(app, controllers);
 
-//Routes and app logic here
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}
-    `);
+// Start the server
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
 });
-
-app.get('/cars', (req, res) => {
-  // Here, we retrieve the cars from the database
-  // Then we render the index.html file with the cars data
-  res.render('index.html', { cars:cars /* cars from the database */ });
-});
-
-app.post('/autos/agregar', (req, res) => {
-  // Here, we add a new car to the database
-  // Then we render the index.html file with the cars data
-});
+//
