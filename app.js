@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import express from "express";
 import nunjucks from "nunjucks";
@@ -15,6 +16,7 @@ app.set("view engine", "njk");
 const viewsPath = "./views";
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(session({
   secret: process.env.SECRET, 
   resave: false,
@@ -42,4 +44,5 @@ registerRoutes(app, controllers);
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+
 //

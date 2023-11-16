@@ -1,7 +1,16 @@
 class CarController {
-  constructor(CarGetService, AuthenticationService) {
+  /**
+   * Initializes the constructor with the provided services.
+   *
+   * @param {CarGetService} CarGetService - The service for getting car information.
+   * @param {AuthenticationService} AuthenticationService - The service for user authentication.
+   * @param {CarUpdateService} CarUpdateService - The service for updating car information.
+   */
+
+  constructor(CarGetService, AuthenticationService, CarUpdateService) {
     this.CarGetService = CarGetService;
-    this.authService = AuthenticationService;
+    this.AuthenticationService = AuthenticationService;
+    this.CarUpdateService = CarUpdateService;
   }
 
   async renderCarsView(req, res) {
@@ -15,9 +24,12 @@ class CarController {
   }
 
   async renderAdminView(req, res) {
+    const message = req.cookies.message;
+    res.clearCookie("message");
+
     try {
       const cars = await this.CarGetService.getAllCars();
-      res.render("admin/dashboard", { cars });
+      res.render("admin/dashboard", { cars, message });
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal server error");
@@ -39,10 +51,26 @@ class CarController {
     }
   }
 
+  async updateCar(req, res) {
+    try {
+      const id = req.params.id;
+      const newCarData = req.body;
+
+      await this.CarUpdateService.updateCar(id, newCarData);
+
+      res.cookie("message", "Car updated successfully");
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      console.error(error);
+      res.cookie("message", "Internal server error");
+      res.redirect("/admin/dashboard");
+    }
+  }
   registerRoutes(app) {
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
     app.get("/admin/edit/:id", (req, res) => this.renderEditCarView(req, res));
+    app.post("/cars/:id", (req, res) => this.updateCar(req, res));
   }
 }
 

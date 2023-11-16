@@ -1,5 +1,10 @@
 
 class CarGetService {
+/**
+ * Initializes a new instance of the class.
+ *
+ * @param {type} CarRepository - The car repository.
+ */
   constructor(CarRepository) {
     this.CarRepository = CarRepository;
   }
