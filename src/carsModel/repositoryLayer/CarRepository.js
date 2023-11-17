@@ -37,24 +37,39 @@ class CarRepository {
   }
 
   updateCar(id, newCarData) {
-    return new Promise((resolve, reject) => {
-      const {
-        brand,
-        model,
-        day_price,
-        year,
-        mileage,
-        color,
-        air_conditioning,
-        passengers,
-        transmission,
-        panoramic_sunroof,
-        created_at,
-        updated_at,
-      } = newCarData;
-      const query =
-        "UPDATE cars SET brand = ?, model = ?, day_price = ?, year = ?, mileage = ?, Color = ?, air_conditioning = ?, passengers = ?, transmission = ?, panoramic_sunroof = ?, created_at = ?, updated_at = ? WHERE id = ?";
+    const {
+      brand,
+      model,
+      day_price,
+      year,
+      mileage,
+      color,
+      air_conditioning,
+      passengers,
+      transmission,
+      panoramic_sunroof,
+      created_at,
+      updated_at,
+    } = newCarData;
 
+    const query = `
+      UPDATE cars SET 
+      brand = ?, 
+      model = ?, 
+      day_price = ?, 
+      year = ?, 
+      mileage = ?, 
+      color = ?, 
+      air_conditioning = ?, 
+      passengers = ?, 
+      transmission = ?, 
+      panoramic_sunroof = ?, 
+      created_at = ?, 
+      updated_at = ? 
+      WHERE id = ?
+    `;
+
+    return new Promise((resolve, reject) => {
       this.db.run(
         query,
         [
@@ -62,7 +77,6 @@ class CarRepository {
           model,
           day_price,
           year,
-          id,
           mileage,
           color,
           air_conditioning,
@@ -71,6 +85,7 @@ class CarRepository {
           panoramic_sunroof,
           created_at,
           updated_at,
+          id,
         ],
         function (error) {
           if (error) {

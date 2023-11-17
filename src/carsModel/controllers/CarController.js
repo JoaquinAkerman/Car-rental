@@ -55,6 +55,8 @@ class CarController {
     try {
       const id = req.params.id;
       const newCarData = req.body;
+      console.log(newCarData);
+      console.log(id);
 
       await this.CarUpdateService.updateCar(id, newCarData);
 
@@ -69,7 +71,7 @@ class CarController {
   registerRoutes(app) {
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
-    app.get("/admin/edit/:id", (req, res) => this.renderEditCarView(req, res));
+    app.get("/admin/edit_car/:id", (req, res) => this.renderEditCarView(req, res));
     app.post("/cars/:id", (req, res) => this.updateCar(req, res));
   }
 }
