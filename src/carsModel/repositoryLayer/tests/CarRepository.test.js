@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import CarRepository from "../CarRepository.js";
 
-describe("CarRepository", () => {
+describe("CarRepository getting cars", () => {
   let carRepository;
   let db;
 
@@ -49,7 +49,7 @@ describe("CarRepository", () => {
   });
 });
 
-describe("CarRepository", () => {
+
   describe("getCarById", () => {
     it("should return the car with the given id", async () => {
       const db = {
@@ -80,7 +80,7 @@ describe("CarRepository", () => {
       const id = 1;
 
       await expect(carRepository.getCarById(id)).rejects.toThrow(
-       `Error getting car with id ${id}`
+        `Error getting car with id ${id}`
       );
       expect(db.get).toHaveBeenCalledWith(
         "SELECT * FROM cars WHERE id = ?",
@@ -88,6 +88,76 @@ describe("CarRepository", () => {
         expect.any(Function)
       );
     });
+  });
+
+
+describe("CarRepository updating car", () => {
+  let db;
+  let carRepository;
+
+  beforeEach(() => {
+    db = { run: jest.fn() };
+    db.run.mockImplementation(function (query, params, callback) {
+      callback.call({ changes: 1 }, null);
+    });
+    carRepository = new CarRepository(db);
+  });
+
+  it("updateCar updates the car data", async () => {
+    const id = "1";
+    const newCarData = {
+      brand: "Test Brand",
+      model: "Test Model",
+      day_price: 50,
+      year: 2022,
+      mileage: 1000,
+      color: "Red",
+      air_conditioning: true,
+      passengers: 5,
+      transmission: "Automatic",
+      panoramic_sunroof: true,
+    };
+
+    db.run.mockImplementation(function (query, params, callback) {
+      callback.call({ changes: 1 }, null);
+    });
+
+    const changes = await carRepository.updateCar(id, newCarData);
+
+    expect(changes).toBe(1);
+    expect(db.run).toHaveBeenCalled();
+  });
+
+  it('updateCar handles errors', async () => {
+    const id = '1';
+    const newCarData = {
+      brand: 'Test Brand',
+      model: 'Test Model',
+      day_price: 50,
+      year: 2022,
+      mileage: 1000,
+      color: 'Red',
+      air_conditioning: true,
+      passengers: 5,
+      transmission: 'Automatic',
+      panoramic_sunroof: true,
+    };
+
+    const error = new Error('Database error');
+    db.run.mockImplementation(function(query, params, callback) {
+      callback.call(this, error);
+    });
+
+    console.error = jest.fn();
+
+    try {
+      await carRepository.updateCar(id, newCarData);
+    } catch (e) {
+      expect(e.message).toBe(`Error updating car with id ${id}`);
+    }
+
+    expect(console.error).toHaveBeenCalledWith(error);
+    expect(db.run).toHaveBeenCalled();
   });
 });
 

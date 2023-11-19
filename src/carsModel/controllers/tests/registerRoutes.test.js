@@ -71,7 +71,7 @@ describe("CarController", () => {
       carController.updateCar = jest.fn((req, res) => res.sendStatus(200));
 
       return request
-        .post("/cars/:id")
+        .put("/cars/:id")
         .expect(200)
         .then(() => {
           expect(carController.updateCar).toHaveBeenCalled();

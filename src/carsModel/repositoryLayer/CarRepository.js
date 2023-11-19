@@ -48,9 +48,9 @@ class CarRepository {
       passengers,
       transmission,
       panoramic_sunroof,
-      created_at,
-      updated_at,
     } = newCarData;
+
+    const updated_at = new Date().toISOString();
 
     const query = `
       UPDATE cars SET 
@@ -64,7 +64,6 @@ class CarRepository {
       passengers = ?, 
       transmission = ?, 
       panoramic_sunroof = ?, 
-      created_at = ?, 
       updated_at = ? 
       WHERE id = ?
     `;
@@ -83,7 +82,6 @@ class CarRepository {
           passengers,
           transmission,
           panoramic_sunroof,
-          created_at,
           updated_at,
           id,
         ],

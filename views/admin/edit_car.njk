@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Edit Car</h1>
-    <form action="/cars/{{ car.id }}" method="post">
+    <form action="/cars/{{ car.id }}?_method=put" method="post">
         <label for="brand">Brand:</label><br>
         <input type="text" id="brand" name="brand" value="{{ car.brand }}"><br>
         <label for="model">Model:</label><br>
