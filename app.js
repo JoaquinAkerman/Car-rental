@@ -35,7 +35,7 @@ nunjucks.configure(viewsPath, {
   watch: true,
 });
 
-// Routes
+// Setting up the Controllers
 const container = configureDI();
 const controllers = [
   container.get("CarController"),

@@ -66,6 +66,21 @@ class CarController {
       res.redirect("/admin/dashboard");
     }
   }
+  async deleteCar(req, res) {
+    try {
+      const id = req.params.id;
+
+      await this.CarUpdateService.deleteCar(id);
+
+      res.cookie("message", "Car deleted successfully");
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      console.error(error);
+      res.cookie("message", "Internal server error");
+      res.redirect("/admin/dashboard");
+    }
+  }
+
   registerRoutes(app) {
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
@@ -73,7 +88,8 @@ class CarController {
       this.renderEditCarView(req, res)
     );
     app.put("/cars/:id", (req, res) => this.updateCar(req, res));
+    app.delete("/admin/delete/:id", (req, res) => this.deleteCar(req, res));
   }
 }
-
+//
 export default CarController;

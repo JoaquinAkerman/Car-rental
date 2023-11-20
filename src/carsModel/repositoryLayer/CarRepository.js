@@ -95,6 +95,21 @@ class CarRepository {
       );
     });
   }
+
+  deleteCar(id) {
+    const query = "DELETE FROM cars WHERE id = ?";
+
+    return new Promise((resolve, reject) => {
+      this.db.run(query, [id], function (error) {
+        if (error) {
+          console.error(error);
+          reject(new Error(`Error deleting car with id ${id}`));
+        }
+        resolve(this.changes);
+      });
+    });
+  }
+
 }
 
 export default CarRepository;
