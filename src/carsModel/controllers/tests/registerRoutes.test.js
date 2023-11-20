@@ -62,7 +62,7 @@ describe("CarController", () => {
   });
 
   describe("registerRoutes", () => {
-    it("should respond to a POST request at the /cars/:id route", () => {
+    it("should respond to a PATCH request at the /cars/:id route", () => {
       const carController = new CarController();
       const app = express();
       carController.registerRoutes(app);
@@ -71,7 +71,7 @@ describe("CarController", () => {
       carController.updateCar = jest.fn((req, res) => res.sendStatus(200));
 
       return request
-        .put("/cars/:id")
+        .patch("/cars/:id")
         .expect(200)
         .then(() => {
           expect(carController.updateCar).toHaveBeenCalled();

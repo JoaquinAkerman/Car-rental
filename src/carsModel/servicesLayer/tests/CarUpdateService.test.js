@@ -94,3 +94,44 @@ describe("deleteCar", () => {
     expect(carRepository.deleteCar).toHaveBeenCalledWith(id);
   });
 });
+
+describe("CarUpdateService", () => {
+  let carUpdateService;
+  let mockCarRepository;
+
+  beforeEach(() => {
+    mockCarRepository = {
+      createCar: jest.fn(),
+      updateCar: jest.fn(),
+    };
+    carUpdateService = new CarUpdateService(mockCarRepository);
+  });
+
+  it("should create a new car when id is not provided", async () => {
+    const carData = {
+      brand: "Test Brand",
+      model: "Test Model",
+      day_price: 100,
+    };
+    await carUpdateService.createCar(carData);
+    expect(mockCarRepository.createCar).toHaveBeenCalledWith(carData);
+  });
+
+  it("should update a car when id is provided", async () => {
+    const carData = {
+      id: 1,
+      brand: "Test Brand",
+      model: "Test Model",
+      day_price: 100,
+    };
+    await carUpdateService.createCar(carData);
+    expect(mockCarRepository.updateCar).toHaveBeenCalledWith(carData);
+  });
+
+  it("should throw an error when required fields are missing", async () => {
+    const carData = { model: "Test Model", day_price: 100 };
+    await expect(carUpdateService.createCar(carData)).rejects.toThrow(
+      "Brand, model and day price are required"
+    );
+  });
+});

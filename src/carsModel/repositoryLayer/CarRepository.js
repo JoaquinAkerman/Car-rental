@@ -110,6 +110,37 @@ class CarRepository {
     });
   }
 
+  createCar(carData) {
+    const now = new Date().toISOString();
+    carData.created_at = now;
+    carData.updated_at = now;
+    const query =
+      "INSERT INTO cars (brand, model, day_price, year, mileage, color, air_conditioning, passengers, transmission, panoramic_sunroof, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const params = [
+      carData.brand,
+      carData.model,
+      carData.day_price,
+      carData.year,
+      carData.mileage,
+      carData.color,
+      carData.air_conditioning,
+      carData.passengers,
+      carData.transmission,
+      carData.panoramic_sunroof,
+      carData.created_at,
+      carData.updated_at,
+    ];
+
+    return new Promise((resolve, reject) => {
+      this.db.run(query, params, function (error) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(this.lastID);
+        }
+      });
+    });
+  }
 }
 
 export default CarRepository;

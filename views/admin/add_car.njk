@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Car</title>
+</head>
+<body>
+    <h1>Add New Car</h1>
+    <form action="/admin/add" method="post">
+        <label for="brand">Brand:</label><br>
+        <input type="text" id="brand" name="brand" required><br>
+        <label for="model">Model:</label><br>
+        <input type="text" id="model" name="model" required><br>
+        <label for="day_price">Day Price:</label><br>
+        <input type="number" id="day_price" name="day_price" required><br>
+        <label for="year">Year:</label><br>
+        <input type="number" id="year" name="year"><br>
+        <label for="mileage">Mileage:</label><br>
+        <input type="number" id="mileage" name="mileage"><br>
+        <label for="color">Color:</label><br>
+        <input type="text" id="color" name="color"><br>
+        <label for="air_conditioning">Air Conditioning:</label><br>
+        <input type="text" id="air_conditioning" name="air_conditioning"><br>
+        <label for="passengers">Passengers:</label><br>
+        <input type="number" id="passengers" name="passengers"><br>
+        <label for="transmission">Transmission:</label><br>
+        <input type="text" id="transmission" name="transmission"><br>
+        <label for="panoramic_sunroof">Panoramic Sunroof:</label><br>
+        <input type="text" id="panoramic_sunroof" name="panoramic_sunroof"><br>
+        <input type="submit" value="Add Car">
+    </form>
+    <a href="/admin/dashboard" style="display: inline-block; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; margin-top: 10px;">Back to Dashboard</a>
+</body>
+</html>
