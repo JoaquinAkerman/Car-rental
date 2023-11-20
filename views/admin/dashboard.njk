@@ -7,11 +7,17 @@
 </head>
 <body>
     <h1>Admin Dashboard</h1>
+    {% if message %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endif %}
     <table>
         <thead>
             <tr>
                 <th>Brand</th>
                 <th>Model</th>
+                <th>Day price</th>
                 <th>Year</th>
                 <th>Mileage</th>
                 <th>Color</th>
@@ -24,21 +30,24 @@
         </thead>
         <tbody>
             {% for car in cars %}
-            <tr>
-                <td>{{ car.brand }}</td>
-                <td>{{ car.model }}</td>
-                <td>{{ car.year }}</td>
-                <td>{{ car.mileage }}</td>
-                <td>{{ car.color }}</td>
-                <td>{{ car.air_conditioning }}</td>
-                <td>{{ car.passengers }}</td>
-                <td>{{ car.transmission }}</td>
-                <td>{{ car.panoramic_sunroof }}</td>
-                <td>
-                    <a href="/admin/edit/{{ car.id }}">Edit</a> |
-                    <a href="/admin/delete/{{ car.id }}">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ car.brand }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.day_price }}</td>
+                    <td>{{ car.year }}</td>
+                    <td>{{ car.mileage }}</td>
+                    <td>{{ car.color }}</td>
+                    <td>{{ car.air_conditioning }}</td>
+                    <td>{{ car.passengers }}</td>
+                    <td>{{ car.transmission }}</td>
+                    <td>{{ car.panoramic_sunroof }}</td>
+                    <td>
+                        <a href="/admin/edit_car/{{ car.id }}">Edit</a> |
+                        <form action="/admin/delete/{{ car.id }}?_method=delete" method="POST" style="display: inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

@@ -1,11 +1,13 @@
 {
   "dependencies": {
     "bulma": "^0.9.4",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-nunjucks": "^3.1.1",
     "express-session": "^1.17.3",
     "inversify": "^6.0.1",
+    "method-override": "^3.0.0",
     "mongoose": "^7.6.3",
     "nunjucks": "^3.2.4",
     "reflect-metadata": "^0.1.13",
@@ -18,6 +20,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --config jest.config.cjs --coverage",
+    "test:failures": "jest --onlyFailures",
+    "test-watch": "jest --watchAll",
     "clear-jest-cache": "jest --clearCache",
     "dev": "nodemon app.js"
   },

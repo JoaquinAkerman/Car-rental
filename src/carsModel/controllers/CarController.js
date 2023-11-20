@@ -1,7 +1,16 @@
 class CarController {
-  constructor(CarGetService, AuthenticationService) {
+  /**
+   * Initializes the constructor with the provided services.
+   *
+   * @param {CarGetService} CarGetService - The service for getting car information.
+   * @param {AuthenticationService} AuthenticationService - The service for user authentication.
+   * @param {CarUpdateService} CarUpdateService - The service for updating car information.
+   */
+
+  constructor(CarGetService, AuthenticationService, CarUpdateService) {
     this.CarGetService = CarGetService;
-    this.authService = AuthenticationService;
+    this.AuthenticationService = AuthenticationService;
+    this.CarUpdateService = CarUpdateService;
   }
 
   async renderCarsView(req, res) {
@@ -15,9 +24,21 @@ class CarController {
   }
 
   async renderAdminView(req, res) {
+    const message = req.cookies.message;
+    res.clearCookie("message");
+
     try {
       const cars = await this.CarGetService.getAllCars();
-      res.render("admin/dashboard", { cars });
+      res.render("admin/dashboard", { cars, message });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    }
+  }
+
+  async renderAddCarView(req, res) {
+    try {
+      res.render("admin/add_car");
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal server error");
@@ -39,11 +60,70 @@ class CarController {
     }
   }
 
+  async updateCar(req, res) {
+    try {
+      const id = req.params.id;
+      const newCarData = req.body;
+
+      await this.CarUpdateService.updateCar(id, newCarData);
+
+      res.cookie("message", "Car updated successfully");
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      console.error(error);
+      res.cookie("message", "Internal server error");
+      res.redirect("/admin/dashboard");
+    }
+  }
+
+  async deleteCar(req, res) {
+    try {
+      const id = req.params.id;
+
+      await this.CarUpdateService.deleteCar(id);
+
+      res.cookie("message", "Car deleted successfully");
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      console.error(error);
+      res.cookie("message", "Internal server error");
+      res.redirect("/admin/dashboard");
+    }
+  }
+
+  async createCar(req, res) {
+    try {
+      const carData = req.body;
+      await this.CarUpdateService.createCar(carData);
+
+      // Set a success message in cookies
+      res.cookie("message", "Car saved successfully", {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+      });
+
+      res.redirect(`/admin/dashboard`);
+    } catch (error) {
+      // Set an error message in cookies
+      res.cookie("message", "Internal server error" + error, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+      });
+
+      res.redirect(`/admin/dashboard`);
+    }
+  }
   registerRoutes(app) {
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
-    app.get("/admin/edit/:id", (req, res) => this.renderEditCarView(req, res));
+    app.get("/admin/edit_car/:id", (req, res) =>
+      this.renderEditCarView(req, res)
+    );
+    app.get("/admin/add", (req, res) => this.renderAddCarView(req, res));
+    app.patch("/cars/:id", (req, res) => this.updateCar(req, res));
+    app.post("/admin/add", (req, res) => this.createCar(req, res));
+    app.delete("/admin/delete/:id", (req, res) => this.deleteCar(req, res));
   }
 }
-
+//
 export default CarController;
