@@ -196,3 +196,44 @@ describe("CarRepository deleting car", () => {
     );
   });
 });
+
+
+describe("CarRepository adding car", () => {
+  it("createCar creates a new car", async () => {
+    const db = {
+      run: jest.fn((query, params, callback) => {
+        callback.call({ lastID: 1 }, null);
+      }),
+    };
+    const carRepository = new CarRepository(db);
+    const newCarData = {
+      brand: "Test Brand",
+      model: "Test Model",
+      day_price: 50,
+      year: 2022,
+      mileage: 1000,
+      color: "Red",
+      air_conditioning: true,
+      passengers: 5,
+      transmission: "Automatic",
+      panoramic_sunroof: true,
+    };
+    await carRepository.createCar(newCarData);
+    expect(db.run).toHaveBeenCalled();
+    expect(db.run.mock.calls[0][0]).toContain("INSERT INTO cars");
+    expect(db.run.mock.calls[0][1]).toEqual([
+      newCarData.brand,
+      newCarData.model,
+      newCarData.day_price,
+      newCarData.year,
+      newCarData.mileage,
+      newCarData.color,
+      newCarData.air_conditioning,
+      newCarData.passengers,
+      newCarData.transmission,
+      newCarData.panoramic_sunroof,
+      expect.any(String), // created_at
+      expect.any(String), // updated_at
+    ]);
+  });
+});
