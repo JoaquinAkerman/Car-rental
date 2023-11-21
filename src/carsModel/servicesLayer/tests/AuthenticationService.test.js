@@ -8,7 +8,7 @@ describe('AuthenticationService', () => {
   });
 
   test('validateUser should return true for correct credentials', () => {
-    const isValid = authService.validateUser('admin', 'password');
+    const isValid = authService.validateUser('admin', 'admin');
 
     expect(isValid).toBe(true);
   });

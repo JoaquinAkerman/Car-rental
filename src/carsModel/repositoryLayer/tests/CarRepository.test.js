@@ -236,4 +236,27 @@ describe("CarRepository adding car", () => {
       expect.any(String), // updated_at
     ]);
   });
+
+  it("createCar handles errors", async () => {
+    const db = {
+      run: jest.fn((query, params, callback) => {
+        callback.call(null, new Error("Database error"));
+      }),
+    };
+    const carRepository = new CarRepository(db);
+    const newCarData = {
+      brand: "Test Error Brand",
+      model: "Test Error Model",
+      day_price: 50,
+      year: 2022,
+      mileage: 1000,
+      color: "Test Error", 
+      air_conditioning: true,
+      passengers: 5,
+      transmission: "Test Error",
+      panoramic_sunroof: true,
+    };
+    await expect(carRepository.createCar(newCarData)).rejects.toThrow("Database error");
+  });
+
 });
