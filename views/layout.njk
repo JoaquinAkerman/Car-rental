@@ -1,12 +1,59 @@
+{# <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="A comprehensive car rental system allowing users to browse, rent, and the admin to manage cars with ease.">
+        <meta name="keywords"
+              content="Car Rental, Vehicle Management, Online Booking, Car Management">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    </head>
+    <body>
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Car Rental</h1>
+                <div>
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </div>
+        </section>
+    </body>
+</html> #}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="A comprehensive car rental system allowing users to browse, rent, and the admin to manage cars with ease.">
+    <meta name="keywords" content="Car Rental, Vehicle Management, Online Booking, Car Management">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
 </head>
+
 <body>
-    {% block content %}{% endblock %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-primary">Car Rental</h1>
+            <div class="content">
+                {% block content %}
+                {% endblock content %}
+            </div>
+                <a href="/cars" class="button is-link mt-3 ">View Cars</a>
+        </div>
+    </section>
+
 </body>
+
 </html>

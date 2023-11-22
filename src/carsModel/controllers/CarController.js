@@ -8,7 +8,12 @@ class CarController {
    * @param {errorHandlingMiddleware} errorHandlingMiddleware - The middleware for handling errors.
    */
 
-  constructor(CarGetService, AuthenticationService, CarUpdateService, errorHandlingMiddleware) {
+  constructor(
+    CarGetService,
+    AuthenticationService,
+    CarUpdateService,
+    errorHandlingMiddleware
+  ) {
     this.CarGetService = CarGetService;
     this.AuthenticationService = AuthenticationService;
     this.CarUpdateService = CarUpdateService;
@@ -18,7 +23,7 @@ class CarController {
   async renderCarsView(req, res) {
     try {
       const cars = await this.CarGetService.getAllCars();
-      res.render("index", { cars });
+      res.render("cars", { cars });
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal server error");

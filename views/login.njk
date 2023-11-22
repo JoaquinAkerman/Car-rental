@@ -1,20 +1,40 @@
 {% extends "layout.njk" %}
-
 {% block title %}
-Login
-{% endblock %}
-
+    Login
+{% endblock title %}
 {% block content %}
-<h1>Login</h1>
-{% if message %}
-<p>{{ message }}</p>
-{% endif %}
-<form action="/" method="post">
-    <label for="username" >Username:</label><br>
-    <input type="text" id="username" name="username" placeholder="admin"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" placeholder="admin"><br>
-    <input type="submit"  value="Login">
-</form>
-<a href="/cars" style="display: inline-block; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; margin-top: 10px;">View Cars (no login needed)</a>
-{% endblock %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Login</h1>
+            {% if message %}<div class="notification is-danger">{{ message }}</div>{% endif %}
+            <form action="/" method="post">
+                <div class="field">
+                    <label class="label" for="username">Username:</label>
+                    <div class="control">
+                        <input class="input"
+                               type="text"
+                               id="username"
+                               name="username"
+                               placeholder="admin">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="password">Password:</label>
+                    <div class="control">
+                        <input class="input"
+                               type="password"
+                               id="password"
+                               name="password"
+                               placeholder="admin">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input type="submit" class="button is-primary" value="Login">
+                    </div>
+                </div>
+            </form>
+            <a href="/cars" class="button is-link mt-3 ">View Cars (no login needed)</a>
+        </div>
+    </section>
+{% endblock content %}
