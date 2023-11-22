@@ -22,7 +22,7 @@ class AuthController {
       req.session.admin = true;
       res.redirect("/admin/dashboard");
     } else {
-      res.cookie("message", "Invalid username or password!!!", { maxAge: 1000 });
+      res.cookie("message", "Invalid username or password", { maxAge: 1000 });
       res.redirect("/");
     }
   }

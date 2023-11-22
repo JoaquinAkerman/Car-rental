@@ -1,56 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <h1>Admin Dashboard</h1>
-    {% if message %}
+{% extends "layout.njk" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<a href="add" class="button is-primary">Add New Car</a>
+ {% if message %}
         <div class="alert">
             {{ message }}
         </div>
     {% endif %}
-    <table>
-        <thead>
-            <tr>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Day price</th>
-                <th>Year</th>
-                <th>Mileage</th>
-                <th>Color</th>
-                <th>Air Conditioning</th>
-                <th>Passengers</th>
-                <th>Transmission</th>
-                <th>Panoramic Sunroof</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for car in cars %}
-                <tr>
-                    <td>{{ car.brand }}</td>
-                    <td>{{ car.model }}</td>
-                    <td>{{ car.day_price }}</td>
-                    <td>{{ car.year }}</td>
-                    <td>{{ car.mileage }}</td>
-                    <td>{{ car.color }}</td>
-                    <td>{{ car.air_conditioning }}</td>
-                    <td>{{ car.passengers }}</td>
-                    <td>{{ car.transmission }}</td>
-                    <td>{{ car.panoramic_sunroof }}</td>
-                    <td>
-                        <a href="/admin/edit_car/{{ car.id }}">Edit</a> |
-                        <form action="/admin/delete/{{ car.id }}?_method=delete" method="POST" style="display: inline;">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="/admin/add">Add New Car</a>
-</body>
-</html>
+<ul>
+    <h2>Cars</h2>
+    {% for car in cars %}
+        <li style="border: 1px solid #000; padding: 10px;">
+            <strong>Brand:</strong> {{ car.brand }}<br>
+            <strong>Model:</strong> {{ car.model }}<br>
+            <strong>Day price:</strong> {{ car.day_price }}<br>
+            <strong>Year:</strong> {{ car.year }}<br>
+            <strong>Mileage:</strong> {{ car.mileage }}<br>
+            <strong>Colors:</strong> {{ car.color }}<br>
+            <strong>Air conditioning:</strong> {{ car.air_conditioning }}<br>
+            <strong>Passengers:</strong> {{ car.passengers }}<br>
+            <strong>Transmission:</strong> {{ car.transmission }}<br>
+            <strong>Panoramic sunroof:</strong> {{ car.panoramic_sunroof }}<br>
+            <a href="/admin/edit_car/{{ car.id }}" class="button is-warning">Edit</a>
+            <form action="/admin/delete/{{ car.id }}?_method=delete" method="post" style="display: inline;">
+                <input type="submit" value="Delete" class="button is-danger">
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

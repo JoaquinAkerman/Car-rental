@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{# <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,4 +26,32 @@
         {% endfor %}
     </ul>
 </body>
-</html>
+</html> #}
+
+{% extends "layout.njk" %}
+
+{% block title %}
+Car List
+{% endblock %}
+
+{% block content %}
+<h1>Car List</h1>
+<a href="/" class="button is-primary">Login</a>
+<ul>     
+    <h2>Cars</h2>
+    {% for car in cars %}
+        <li style="border: 1px solid #000; padding: 10px;">
+            <strong>Brand:</strong> {{ car.brand }}<br>
+            <strong>Model:</strong> {{ car.model }}<br>
+            <strong>Day price:</strong> {{ car.day_price }}<br>
+            <strong>Year:</strong> {{ car.year }}<br>
+            <strong>Mileage:</strong> {{ car.mileage }}<br>
+            <strong>Colors:</strong> {{ car.color }}<br>
+            <strong>Air conditioning:</strong> {{ car.air_conditioning }}<br>
+            <strong>Passengers:</strong> {{ car.passengers }}<br>
+            <strong>Transmission:</strong> {{ car.transmission }}<br>
+            <strong>Panoramic sunroof:</strong> {{ car.panoramic_sunroof }}<br>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
