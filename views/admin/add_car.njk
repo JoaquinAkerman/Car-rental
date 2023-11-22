@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Car</title>
-</head>
-<body>
+{% extends "layout.njk" %}
+{% block title %}
+    Add New Car
+{% endblock %}
+{% block content%}
+
     <h1>Add New Car</h1>
     <form action="/admin/add" method="post">
         <label for="brand">Brand:</label><br>
@@ -31,5 +29,4 @@
         <input type="submit" value="Add Car">
     </form>
     <a href="/admin/dashboard" style="display: inline-block; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; margin-top: 10px;">Back to Dashboard</a>
-</body>
-</html>
+{% endblock %}

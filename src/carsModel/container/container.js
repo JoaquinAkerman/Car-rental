@@ -19,13 +19,27 @@ const db = new sqlite3.Database(process.env.DB_PATH);
  */
 export default function configureDI() {
   const container = new DIContainer();
-  
+
   container.add("CarRepository", () => new CarRepository(db));
-  container.add("CarUpdateService", ({ CarRepository }) => new CarUpdateService(CarRepository));
-  container.add("CarGetService", ({ CarRepository }) => new CarGetService(CarRepository));
+  container.add(
+    "CarUpdateService",
+    ({ CarRepository }) => new CarUpdateService(CarRepository)
+  );
+  container.add(
+    "CarGetService",
+    ({ CarRepository }) => new CarGetService(CarRepository)
+  );
   container.add("AuthenticationService", () => new AuthenticationService());
-  container.add("AuthController", ({ AuthenticationService }) => new AuthController(AuthenticationService));
-  container.add("CarController", ({ CarGetService, AuthenticationService, CarUpdateService }) => new CarController(CarGetService, AuthenticationService, CarUpdateService));
+  container.add(
+    "AuthController",
+    ({ AuthenticationService }) => new AuthController(AuthenticationService)
+  );
+
+  container.add(
+    "CarController",
+    ({ CarGetService, AuthenticationService, CarUpdateService }) =>
+      new CarController(CarGetService, AuthenticationService, CarUpdateService)
+  );
 
   return container;
 }

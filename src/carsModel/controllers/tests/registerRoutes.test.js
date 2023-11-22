@@ -79,3 +79,58 @@ describe("CarController", () => {
     });
   });
 });
+
+describe("registerRoutes", () => {
+  it("should respond to a POST request at the /admin/add route", () => {
+    const carController = new CarController();
+    const app = express();
+    carController.registerRoutes(app);
+    const request = supertest(app);
+
+    carController.createCar = jest.fn((req, res) => res.sendStatus(200));
+
+    return request
+      .post("/admin/add")
+      .expect(200)
+      .then(() => {
+        expect(carController.createCar).toHaveBeenCalled();
+      });
+  });
+});
+
+describe("renderAddCarView", () => {
+  it("should render the add car view", () => {
+    const carController = new CarController();
+    const app = express();
+    carController.registerRoutes(app);
+    const request = supertest(app);
+
+    carController.renderAddCarView = jest.fn((req, res) => res.sendStatus(200));
+
+    return request
+      .get("/admin/add")
+      .expect(200)
+      .then(() => {
+        expect(carController.renderAddCarView).toHaveBeenCalled();
+      });
+  });
+});
+
+
+describe("deleteCar", () => {
+  it("should delete a car", () => {
+    const carController = new CarController();
+    const app = express();
+    carController.registerRoutes(app);
+    const request = supertest(app);
+
+    carController.deleteCar = jest.fn((req, res) => res.sendStatus(200));
+
+    return request
+      .delete("/admin/delete/:id")
+      .expect(200)
+      .then(() => {
+        expect(carController.deleteCar).toHaveBeenCalled();
+      })
+  });
+});

@@ -4,29 +4,28 @@ class CarUpdateService {
   }
 
   async updateCar(id, newCarData) {
-    console.log("newCarData from CarUpdateService", newCarData);
     const car = await this.carRepository.getCarById(id);
-  
+
     if (!car) {
       throw new Error(`Car with id ${id} not found`);
     }
-  
+
     return this.carRepository.updateCar(id, newCarData);
   }
 
   async deleteCar(id) {
     const car = await this.carRepository.getCarById(id);
-  
+
     if (!car) {
       throw new Error(`Car with id ${id} not found`);
     }
-  
+
     return this.carRepository.deleteCar(id);
   }
 
   async createCar(carData) {
     if (!carData.brand || !carData.model || !carData.day_price) {
-      throw new Error('Brand, model and day price are required');
+      throw new Error("Brand, model and day price are required");
     }
 
     if (carData.id) {

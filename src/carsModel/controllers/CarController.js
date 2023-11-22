@@ -5,12 +5,14 @@ class CarController {
    * @param {CarGetService} CarGetService - The service for getting car information.
    * @param {AuthenticationService} AuthenticationService - The service for user authentication.
    * @param {CarUpdateService} CarUpdateService - The service for updating car information.
+   * @param {errorHandlingMiddleware} errorHandlingMiddleware - The middleware for handling errors.
    */
 
-  constructor(CarGetService, AuthenticationService, CarUpdateService) {
+  constructor(CarGetService, AuthenticationService, CarUpdateService, errorHandlingMiddleware) {
     this.CarGetService = CarGetService;
     this.AuthenticationService = AuthenticationService;
     this.CarUpdateService = CarUpdateService;
+    this.errorHandlingMiddleware = errorHandlingMiddleware;
   }
 
   async renderCarsView(req, res) {
@@ -96,7 +98,6 @@ class CarController {
       const carData = req.body;
       await this.CarUpdateService.createCar(carData);
 
-      // Set a success message in cookies
       res.cookie("message", "Car saved successfully", {
         httpOnly: true,
         maxAge: 60 * 60 * 24 * 7, // 1 week
@@ -104,7 +105,6 @@ class CarController {
 
       res.redirect(`/admin/dashboard`);
     } catch (error) {
-      // Set an error message in cookies
       res.cookie("message", "Internal server error" + error, {
         httpOnly: true,
         maxAge: 60 * 60 * 24 * 7, // 1 week
