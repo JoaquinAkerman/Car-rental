@@ -46,31 +46,31 @@ describe("CarController", () => {
 
     expect(response.status).toBe(200);
     expect(response.text).toContain(
-      `strong>Brand:</strong> ${mockCars[0].brand}<br>`
+      `<strong>Brand:</strong> ${mockCars[0].brand}`
     );
     expect(response.text).toContain(
-      `strong>Model:</strong> ${mockCars[0].model}<br>`
+      `strong>Model:</strong> ${mockCars[0].model}`
     );
     expect(response.text).toContain(
-      `<strong>Year:</strong> ${mockCars[0].year}<br>`
+      `<strong>Year:</strong> ${mockCars[0].year}`
     );
     expect(response.text).toContain(
-      `<strong>Mileage:</strong> ${mockCars[0].mileage}<br>`
+      `<strong>Mileage:</strong> ${mockCars[0].mileage}`
     );
     expect(response.text).toContain(
-      `<strong>Colors:</strong> ${mockCars[0].color}<br>`
+      `<strong>Colors:</strong> ${mockCars[0].color}`
     );
     expect(response.text).toContain(
-      `<strong>Air conditioning:</strong> ${mockCars[0].air_conditioning}<br>`
+      `<strong>Air conditioning:</strong> ${mockCars[0].air_conditioning}`
     );
     expect(response.text).toContain(
-      `<strong>Passengers:</strong> ${mockCars[0].passengers}<br>`
+      `<strong>Passengers:</strong> ${mockCars[0].passengers}`
     );
     expect(response.text).toContain(
-      `<strong>Transmission:</strong> ${mockCars[0].transmission}<br>`
+      `<strong>Transmission:</strong> ${mockCars[0].transmission}`
     );
     expect(response.text).toContain(
-      `<strong>Panoramic sunroof:</strong> ${mockCars[0].panoramic_sunroof}<br>`
+      `<strong>Panoramic sunroof:</strong> ${mockCars[0].panoramic_sunroof}`
     );
   });
 

@@ -1,36 +1,50 @@
 {% extends "layout.njk" %}
-
 {% block title %}
-Dashboard
-{% endblock %}
-
+    Dashboard
+{% endblock title %}
 {% block content %}
-<h1>Dashboard</h1>
-<a href="add" class="button is-primary">Add New Car</a>
- {% if message %}
-        <div class="alert">
-            {{ message }}
-        </div>
-    {% endif %}
-<ul>
-    <h2>Cars</h2>
+    <h2 class="subtitle">Dashboard</h2>
+    {% if message %}<div class="notification is-primary">{{ message }}</div>{% endif %}
+    <a href="add" class="button is-primary mb-4">Add New Car</a>
+    <h2 class="subtitle">Cars</h2>
     {% for car in cars %}
-        <li style="border: 1px solid #000; padding: 10px;">
-            <strong>Brand:</strong> {{ car.brand }}<br>
-            <strong>Model:</strong> {{ car.model }}<br>
-            <strong>Day price:</strong> {{ car.day_price }}<br>
-            <strong>Year:</strong> {{ car.year }}<br>
-            <strong>Mileage:</strong> {{ car.mileage }}<br>
-            <strong>Colors:</strong> {{ car.color }}<br>
-            <strong>Air conditioning:</strong> {{ car.air_conditioning }}<br>
-            <strong>Passengers:</strong> {{ car.passengers }}<br>
-            <strong>Transmission:</strong> {{ car.transmission }}<br>
-            <strong>Panoramic sunroof:</strong> {{ car.panoramic_sunroof }}<br>
-            <a href="/admin/edit_car/{{ car.id }}" class="button is-warning">Edit</a>
-            <form action="/admin/delete/{{ car.id }}?_method=delete" method="post" style="display: inline;">
-                <input type="submit" value="Delete" class="button is-danger">
-            </form>
-        </li>
+        <div class="box has-background-white-ter">
+            <p>
+                <strong>Brand:</strong> {{ car.brand }}
+            </p>
+            <p>
+                <strong>Model:</strong> {{ car.model }}
+            </p>
+            <p>
+                <strong>Day price:</strong> {{ car.day_price }}
+            </p>
+            <p>
+                <strong>Year:</strong> {{ car.year }}
+            </p>
+            <p>
+                <strong>Mileage:</strong> {{ car.mileage }}
+            </p>
+            <p>
+                <strong>Colors:</strong> {{ car.color }}
+            </p>
+            <p>
+                <strong>Air conditioning:</strong> {{ car.air_conditioning }}
+            </p>
+            <p>
+                <strong>Passengers:</strong> {{ car.passengers }}
+            </p>
+            <p>
+                <strong>Transmission:</strong> {{ car.transmission }}
+            </p>
+            <p>
+                <strong>Panoramic sunroof:</strong> {{ car.panoramic_sunroof }}
+            </p>
+            <div class="buttons">
+                <a href="/admin/edit_car/{{ car.id }}" class="button is-warning">Edit</a>
+                <form action="/admin/delete/{{ car.id }}?_method=delete" method="post">
+                    <input type="submit" value="Delete" class="button is-danger">
+                </form>
+            </div>
+        </div>
     {% endfor %}
-</ul>
-{% endblock %}
+{% endblock content %}

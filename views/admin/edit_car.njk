@@ -1,35 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Car</title>
-</head>
-<body>
-    <h1>Edit Car</h1>
-    <form action="/cars/{{ car.id }}?_method=patch" method="post">
-        <label for="brand">Brand:</label><br>
-        <input type="text" id="brand" name="brand" value="{{ car.brand }}"><br>
-        <label for="model">Model:</label><br>
-        <input type="text" id="model" name="model" value="{{ car.model }}"><br>
-        <label for="day_price">Day Price:</label><br>
-        <input type="number" id="Day price" name="day_price" value="{{ car.day_price }}"><br>
-        <label for="year">Year:</label><br>
-        <input type="number" id="year" name="year" value="{{ car.year }}"><br>
-        <label for="mileage">Mileage:</label><br>
-        <input type="number" id="mileage" name="mileage" value="{{ car.mileage }}"><br>
-        <label for="color">Colors:</label><br>
-        <input type="text" id="color" name="color" value="{{ car.color }}"><br>
-        <label for="air_conditioning">Air conditioning:</label><br>
-        <input type="text" id="air_conditioning" name="air_conditioning" value="{{ car.air_conditioning }}"><br>
-        <label for="passengers">Passengers:</label><br>
-        <input type="number" id="passengers" name="passengers" value="{{ car.passengers }}"><br>
-        <label for="transmission">Transmission:</label><br>
-        <input type="text" id="transmission" name="transmission" value="{{ car.transmission }}"><br>
-        <label for="panoramic_sunroof">Panoramic sunroof:</label><br>
-        <input type="text" id="panoramic_sunroof" name="panoramic_sunroof" value="{{ car.panoramic_sunroof }}"><br>
-        <input type="submit" value="Save Changes">
-    </form>
-    <a href="/admin/dashboard" style="display: inline-block; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; margin-top: 10px;">Back to Car List</a>
-</body>
-</html>
+{% extends "layout.njk" %}
+
+{% block title %}
+Edit Car
+{% endblock title %}
+
+{% block content %}
+<h1>Edit Car</h1>
+<form action="/cars/{{ car.id }}?_method=patch" method="post">
+    {# <label for="brand">Brand:</label><br>
+    <input type="text" id="brand" name="brand" value="{{ car.brand }}"><br>
+    <label for="model">Model:</label><br>
+    <input type="text" id="model" name="model" value="{{ car.model }}"><br>
+    <label for="day_price">Day Price:</label><br>
+    <input type="number" id="Day price" name="day_price" value="{{ car.day_price }}"><br>
+    <label for="year">Year:</label><br>
+    <input type="number" id="year" name="year" value="{{ car.year }}"><br>
+    <label for="mileage">Mileage:</label><br>
+    <input type="number" id="mileage" name="mileage" value="{{ car.mileage }}"><br>
+    <label for="color">Colors:</label><br>
+    <input type="text" id="color" name="color" value="{{ car.color }}"><br>
+    <label for="air_conditioning">Air conditioning:</label><br>
+    <input type="text" id="air_conditioning" name="air_conditioning" value="{{ car.air_conditioning }}"><br>
+    <label for="passengers">Passengers:</label><br>
+    <input type="number" id="passengers" name="passengers" value="{{ car.passengers }}"><br>
+    <label for="transmission">Transmission:</label><br>
+    <input type="text" id="transmission" name="transmission" value="{{ car.transmission }}"><br>
+    <label for="panoramic_sunroof">Panoramic sunroof:</label><br>
+    <input type="text" id="panoramic_sunroof" name="panoramic_sunroof" value="{{ car.panoramic_sunroof }}"><br> #}
+    <label for="brand">Brand:</label>
+        <br>
+        <input type="text" id="brand" name="brand" value="{{ car.brand }}" required>
+        <br>
+        <label for="model">Model:</label>
+        <br>
+        <input type="text" id="model" name="model" value="{{ car.model }}" required>
+        <br>
+        <label for="day_price">Day Price:</label>
+        <br>
+        <input type="number" id="day_price" name="day_price" value="{{ car.day_price }}" required>
+        <br>
+        <label for="year">Year:</label>
+        <br>
+        <input type="number" id="year" name="year" value="{{ car.year }}"   >
+        <br>
+        <label for="mileage">Mileage:</label>
+        <br>
+        <input type="number" id="mileage" name="mileage" value="{{ car.mileage }}">
+        <br>
+        <label for="color">Color:</label>
+        <br>
+        <input type="text" id="color" name="color" value="{{ car.color }}">
+        <br>
+        <label for="air_conditioning">Air Conditioning:</label>
+        <br>
+        <input type="text" id="air_conditioning" name="air_conditioning" value="{{ car.air_conditioning }}">
+        <br>
+        <label for="passengers">Passengers:</label>
+        <br>
+        <input type="number" id="passengers" name="passengers" value="{{ car.passengers }}">
+        <br>
+        <label for="transmission">Transmission:</label>
+        <br>
+        <input type="text" id="transmission" name="transmission" value="{{ car.transmission }}">
+        <br>
+        <label for="panoramic_sunroof">Panoramic Sunroof:</label >
+        <br>
+        <input type="text" id="panoramic_sunroof" name="panoramic_sunroof" value="{{ car.panoramic_sunroof }}">
+        <br>
+    <input type="submit" value="Save Changes" class="button is-danger mt-4">
+</form>
+<a href="/admin/dashboard" class="button is-primary mt-4">Back to Car List</a>
+{% endblock content %}
