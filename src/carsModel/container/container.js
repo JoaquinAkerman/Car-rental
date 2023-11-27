@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+dotenv.config("../../.env");
 import { DIContainer } from "rsdi";
 import sqlite3 from "sqlite3";
 
@@ -9,8 +10,17 @@ import CarGetService from "../servicesLayer/CarGetService.js";
 import CarUpdateService from "../servicesLayer/CarUpdateService.js";
 import CarRepository from "../repositoryLayer/CarRepository.js";
 
-dotenv.config("../../.env");
-const db = new sqlite3.Database(process.env.DB_PATH);
+
+let dbPath = process.env.DB_PATH;
+if (process.env.NODE_ENV === "test") {
+  dbPath = process.env.DB_TEST_PATH;
+}
+
+let db;
+if (!dbPath) {
+  throw new Error("DB_PATH is not defined");
+}
+db = new sqlite3.Database(dbPath);
 
 /**
  * Configures the dependency injection container.
