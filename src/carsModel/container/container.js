@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config("../../.env");
 import { DIContainer } from "rsdi";
-import sqlite3 from "sqlite3";
 
 import AuthController from "../controllers/AuthController.js";
 import CarController from "../controllers/CarController.js";
@@ -9,18 +8,7 @@ import AuthenticationService from "../servicesLayer/AuthenticationService.js";
 import CarGetService from "../servicesLayer/CarGetService.js";
 import CarUpdateService from "../servicesLayer/CarUpdateService.js";
 import CarRepository from "../repositoryLayer/CarRepository.js";
-
-
-let dbPath = process.env.DB_PATH;
-if (process.env.NODE_ENV === "test") {
-  dbPath = process.env.DB_TEST_PATH;
-}
-
-let db;
-if (!dbPath) {
-  throw new Error("DB_PATH is not defined");
-}
-db = new sqlite3.Database(dbPath);
+import DatabaseService from "../infrastructure/DataBaseService.js";
 
 /**
  * Configures the dependency injection container.
@@ -30,7 +18,12 @@ db = new sqlite3.Database(dbPath);
 export default function configureDI() {
   const container = new DIContainer();
 
-  container.add("CarRepository", () => new CarRepository(db));
+  container.add("DatabaseService", () => new DatabaseService());
+
+  container.add(
+    "CarRepository",
+    ({ DatabaseService }) => new CarRepository(DatabaseService.getDatabase())
+  );
   container.add(
     "CarUpdateService",
     ({ CarRepository }) => new CarUpdateService(CarRepository)

@@ -1,5 +1,6 @@
-/* global cy */
 
+const BASE_URL=  Cypress.env("BASE_URL")
+const TEST_PORT = Cypress.env('TEST_PORT');
 describe("Admin Dashboard Test", () => {
   // Reset the test database before each test
   beforeEach(() => {
@@ -7,17 +8,17 @@ describe("Admin Dashboard Test", () => {
   });
 
   it("It should not login with incorrect credentials", () => {
-    cy.visit("http://localhost:3000/");
+    cy.visit(`${BASE_URL}${TEST_PORT}`);
     cy.get('input[id="username"]').type("wrongusername");
     cy.get('input[id="password"]').type("wrongpassword");
     cy.get('input[type="submit"][value="Login"]').click();
-    cy.url().should("eq", "http://localhost:3000/");
+    cy.url().should("eq", `http://localhost:${TEST_PORT}/`);
     cy.get(".notification.is-danger").should("exist").and("contain", "Invalid username or password");
   });
 
   it("It should visit the login page", () => {
-    cy.visit("http://localhost:3000/");
-    cy.url().should("eq", "http://localhost:3000/");
+    cy.visit(`${BASE_URL}${TEST_PORT}/`);
+    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/`);
     cy.get("nav").should("exist");
     cy.get("strong").should("exist");
     cy.get("strong").should("have.text", "Home");
@@ -29,11 +30,11 @@ describe("Admin Dashboard Test", () => {
   });
 
   it("It should login and render the admin dashboard", () => {
-    cy.visit("http://localhost:3000/");
+    cy.visit(`http://localhost:${TEST_PORT}/`);
     cy.get('input[id="username"]').type("admin");
     cy.get('input[id="password"]').type("admin");
     cy.get('input[type="submit"][value="Login"]').click();
-    cy.url().should("eq", "http://localhost:3000/admin/dashboard");
+    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
     cy.get("h1").should("have.text", "Car Rental");
     cy.get("h2").should("contain", "Dashboard");
     cy.get("h2").should("contain", "Cars");
@@ -44,12 +45,12 @@ describe("Admin Dashboard Test", () => {
     //limit is 50 cars because the redirection limit is 50 on cypress.config.js
 
     const numberOfCars = 3;
-    cy.visit("http://localhost:3000/admin/dashboard");
+    cy.visit(`${BASE_URL}${TEST_PORT}/admin/dashboard`);
 
     // Add cars
     for (let i = 0; i < numberOfCars; i++) {
       cy.contains("Add New Car").click();
-      cy.url().should("include", "http://localhost:3000/admin/add");
+      cy.url().should("include", `${BASE_URL}${TEST_PORT}/admin/add`);
       cy.get('input[id="brand"]').type(`Test Brand ${i}`);
       cy.get('input[id="model"]').type(`Test ${i}`);
       cy.get('input[id="day_price"]').type(150);
@@ -75,7 +76,7 @@ describe("Admin Dashboard Test", () => {
   });
 
   it("should check if the example cars are in the database", () => {
-    cy.visit("http://localhost:3000/admin/dashboard");
+    cy.visit(`${BASE_URL}${TEST_PORT}/admin/dashboard`);
 
     // Check for the Toyota car details
     cy.get('.box.has-background-white-ter[data-id="1"]').then(($box) => {
