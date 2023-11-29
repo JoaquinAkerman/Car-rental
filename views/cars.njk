@@ -1,43 +1,51 @@
 {% extends "layout.njk" %}
-
 {% block title %}
     Car List
 {% endblock title %}
-
 {% block content %}
     <section class="section">
         <div class="container">
             <h1 class="title">Car List</h1>
             <a href="/" class="button is-primary mb-4">Login</a>
-            
             <ul class="mt-4">
                 <h2 class="subtitle">Cars</h2>
                 {% for car in cars %}
-                    <li class="box mb-4 has-background-white-ter">
-                        <strong>Brand:</strong> {{ car.brand }}
-                        <br>
-                        <strong>Model:</strong> {{ car.model }}
-                        <br>
-                        <strong>Day price:</strong> {{ car.day_price }}
-                        <br>
-                        <strong>Year:</strong> {{ car.year }}
-                        <br>
-                        <strong>Mileage:</strong> {{ car.mileage }}
-                        <br>
-                        <strong>Colors:</strong> {{ car.color }}
-                        <br>
-                        <strong>Air conditioning:</strong> {{ car.air_conditioning }}
-                        <br>
-                        <strong>Passengers:</strong> {{ car.passengers }}
-                        <br>
-                        <strong>Transmission:</strong> {{ car.transmission }}
-                        <br>
-                        <strong>Panoramic sunroof:</strong> {{ car.panoramic_sunroof }}
-                        <br>
-                    </li>
+                    <div id="car-box-{{ car.id }}"
+                         data-id="{{ car.id }}"
+                         class="box has-background-white-ter">
+                        <p>
+                            <strong>Brand:</strong> {{ car.brand }}
+                        </p>
+                        <p>
+                            <strong>Model:</strong> {{ car.model }}
+                        </p>
+                        <p>
+                            <strong>Day price:</strong> {{ car.day_price }}
+                        </p>
+                        <p>
+                            <strong>Year:</strong> {{ car.year }}
+                        </p>
+                        <p>
+                            <strong>Mileage:</strong> {{ car.mileage }}
+                        </p>
+                        <p>
+                            <strong>Colors:</strong> {{ car.color }}
+                        </p>
+                        <p>
+                            <strong>Air conditioning:</strong> {{ car.air_conditioning }}
+                        </p>
+                        <p>
+                            <strong>Passengers:</strong> {{ car.passengers }}
+                        </p>
+                        <p>
+                            <strong>Transmission:</strong> {{ car.transmission }}
+                        </p>
+                        <p>
+                            <strong>Panoramic sunroof:</strong> {{ car.panoramic_sunroof }}
+                        </p>
+                    </div>
                 {% endfor %}
             </ul>
         </div>
     </section>
 {% endblock content %}
-

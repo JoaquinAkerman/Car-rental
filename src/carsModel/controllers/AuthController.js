@@ -12,7 +12,7 @@ class AuthController {
     const message = req.cookies.message;
     res.clearCookie("message");
 
-    res.render("login", { message });
+    res.render("login", { message, loggedIn: req.session.admin });
   }
 
   handleLoginFormSubmission(req, res) {
@@ -23,19 +23,26 @@ class AuthController {
       res.redirect("/admin/dashboard");
     } else {
       res.cookie("message", "Invalid username or password", { maxAge: 1000 });
-      
+
       res.redirect("/");
     }
   }
 
-  /**
-   * Register the routes for the app.
-   *
-   * @param {Object} app - The Express app.
-   */
+  async logout(req, res) {
+    req.session.destroy(err => {
+      if (err) {
+        return res.redirect('/admin/dashboard');
+      }
+  
+      res.clearCookie('sid');
+      res.redirect('/');
+    });
+  }
+
   registerRoutes(app) {
     app.get("/", (req, res) => this.renderLoginView(req, res));
     app.post("/", (req, res) => this.handleLoginFormSubmission(req, res));
+    app.post("/logout", (req, res) => this.logout(req, res));
   }
 }
 

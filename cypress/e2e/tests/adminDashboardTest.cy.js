@@ -1,6 +1,5 @@
-
-const BASE_URL=  Cypress.env("BASE_URL")
-const TEST_PORT = Cypress.env('TEST_PORT');
+const BASE_URL = Cypress.env("BASE_URL");
+const TEST_PORT = Cypress.env("TEST_PORT");
 describe("Admin Dashboard Test", () => {
   // Reset the test database before each test
   beforeEach(() => {
@@ -13,7 +12,9 @@ describe("Admin Dashboard Test", () => {
     cy.get('input[id="password"]').type("wrongpassword");
     cy.get('input[type="submit"][value="Login"]').click();
     cy.url().should("eq", `http://localhost:${TEST_PORT}/`);
-    cy.get(".notification.is-danger").should("exist").and("contain", "Invalid username or password");
+    cy.get(".notification.is-danger")
+      .should("exist")
+      .and("contain", "Invalid username or password");
   });
 
   it("It should visit the login page", () => {
@@ -44,8 +45,13 @@ describe("Admin Dashboard Test", () => {
     //if you want to add more cars, change the number of cars here
     //limit is 50 cars because the redirection limit is 50 on cypress.config.js
 
+    //Login to admin dashboard
+    cy.visit(`${BASE_URL}${TEST_PORT}`);
+    cy.get('input[id="username"]').type("admin");
+    cy.get('input[id="password"]').type("admin");
+    cy.get('input[type="submit"][value="Login"]').click();
+    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
     const numberOfCars = 3;
-    cy.visit(`${BASE_URL}${TEST_PORT}/admin/dashboard`);
 
     // Add cars
     for (let i = 0; i < numberOfCars; i++) {
@@ -75,13 +81,19 @@ describe("Admin Dashboard Test", () => {
     }
   });
 
-  it("should check if the example cars are in the database", () => {
-    cy.visit(`${BASE_URL}${TEST_PORT}/admin/dashboard`);
+  it("should check if the example cars are in the database , and logout", () => {
+    cy.visit(`${BASE_URL}${TEST_PORT}`);
+    cy.get('input[id="username"]').type("admin");
+    cy.get('input[id="password"]').type("admin");
+    cy.get('input[type="submit"][value="Login"]').click();
+    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
+
+     //check if the cars are rendered
+     cy.get(".box.has-background-white-ter").should("have.length", 3);
 
     // Check for the Toyota car details
     cy.get('.box.has-background-white-ter[data-id="1"]').then(($box) => {
       const box = cy.wrap($box);
-      console.log("box is:", box);
 
       box.get("p").should("contain", "Brand: Toyota Test database");
       box.get("p").should("contain", "Model: Corolla Test");
@@ -126,5 +138,13 @@ describe("Admin Dashboard Test", () => {
       box.get("p").should("contain", "Transmission: Automatic");
       box.get("p").should("contain", "Panoramic sunroof: No");
     });
+
+    cy.get('button[id="logout-button"]').click();
+    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/`);
+    // Check if the login form is displayed
+
+    cy.get('input[id="username"]').should("be.visible");
+    cy.get('input[id="password"]').should("be.visible");
+    cy.get('input[type="submit"][value="Login"]').should("be.visible");
   });
 });
