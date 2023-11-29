@@ -12,18 +12,21 @@ import registerRoutes from "./src/routes/routes.js";
 // Constants
 const app = express();
 const viewsPath = "./views";
-const port = process.env.PORT || 3000;
-
+const port =
+  process.env.NODE_ENV === "test" ? process.env.TEST_PORT : process.env.PORT;
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(methodOverride('_method'));
-app.use(session({
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: true,
-}));
+app.use(methodOverride("_method"));
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // set to true if your application is served over HTTPS
+  })
+);
 
 // Configurations
 dotenv.config();

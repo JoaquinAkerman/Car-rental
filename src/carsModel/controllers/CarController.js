@@ -20,6 +20,13 @@ class CarController {
     this.errorHandlingMiddleware = errorHandlingMiddleware;
   }
 
+  ensureLoggedIn(req, res, next) {
+    if (req.session.admin) {
+      next();
+    } else {
+      res.redirect("/");
+    }
+  }
   async renderCarsView(req, res) {
     try {
       const cars = await this.CarGetService.getAllCars();
@@ -36,7 +43,7 @@ class CarController {
 
     try {
       const cars = await this.CarGetService.getAllCars();
-      res.render("admin/dashboard", { cars, message });
+      res.render("admin/dashboard", { cars, message, req });
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal server error");
@@ -120,6 +127,9 @@ class CarController {
   }
   registerRoutes(app) {
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
+    app.all("/admin/*", (req, res, next) =>
+      this.ensureLoggedIn(req, res, next)
+    );
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
     app.get("/admin/edit_car/:id", (req, res) =>
       this.renderEditCarView(req, res)

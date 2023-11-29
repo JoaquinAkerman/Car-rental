@@ -22,4 +22,8 @@ module.exports = {
     sourceType: "module",
   },
   rules: {},
+  globals: {
+    "Cypress": "readonly",
+    "cy": "readonly"
+  }
 };

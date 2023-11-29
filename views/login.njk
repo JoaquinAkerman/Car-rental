@@ -6,35 +6,40 @@
     <section class="section">
         <div class="container">
             <h2 class="title">Login</h2>
-            {% if message %}<div class="notification is-danger">{{ message }}</div>{% endif %}
-            <form action="/" method="post">
-                <div class="field">
-                    <label class="label" for="username">Username:</label>
-                    <div class="control">
-                        <input class="input"
-                               type="text"
-                               id="username"
-                               name="username"
-                               placeholder="admin">
+            {% if loggedIn %}
+                <div class="notification is-info">You are already logged in as admin</div>
+                <a href="/admin/dashboard" class="button is-primary mt-3">Go to Admin Dashboard</a>
+            {% else %}
+                {% if message %}<div class="notification is-danger">{{ message }}</div>{% endif %}
+                <form action="/" method="post">
+                    <div class="field">
+                        <label class="label" for="username">Username:</label>
+                        <div class="control">
+                            <input class="input"
+                                   type="text"
+                                   id="username"
+                                   name="username"
+                                   placeholder="admin">
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label class="label" for="password">Password:</label>
-                    <div class="control">
-                        <input class="input"
-                               type="password"
-                               id="password"
-                               name="password"
-                               placeholder="admin">
+                    <div class="field">
+                        <label class="label" for="password">Password:</label>
+                        <div class="control">
+                            <input class="input"
+                                   type="password"
+                                   id="password"
+                                   name="password"
+                                   placeholder="admin">
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <input type="submit" class="button is-primary" value="Login">
+                    <div class="field">
+                        <div class="control">
+                            <input type="submit" class="button is-primary" value="Login">
+                        </div>
                     </div>
-                </div>
-            </form>
-            <a href="/cars" class="button is-link mt-3 ">View Cars (no login needed)</a>
+                </form>
+                <a href="/cars" id="view-cars-link" class="button is-link mt-3 ">View Cars (no login needed)</a>
+            {% endif %}
         </div>
     </section>
 {% endblock content %}

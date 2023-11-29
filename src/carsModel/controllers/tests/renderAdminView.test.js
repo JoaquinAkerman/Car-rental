@@ -36,8 +36,16 @@ describe("CarController.renderAdminView", () => {
     expect(carGetServiceMock.getAllCars).toHaveBeenCalled();
     expect(res.clearCookie).toHaveBeenCalledWith("message");
     expect(res.render).toHaveBeenCalledWith("admin/dashboard", {
-      cars: mockCars,
-      message: req.cookies.message,
+      cars: [
+        { id: 1, name: "Car 1" },
+        { id: 2, name: "Car 2" },
+      ],
+      message: "Test message",
+      req: {
+        cookies: {
+          message: "Test message",
+        },
+      },
     });
   });
 

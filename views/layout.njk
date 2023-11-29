@@ -15,7 +15,19 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     </head>
     <body>
-        <div id="top"></div>
+        <div id="top">
+            {% if req.session.admin %}
+                <div class="notification is-info">
+                    Welcome, Admin
+                    {% if req.session.admin %}
+                        <form action="/logout" method="post" class="navbar-item">
+                            <button id="logout-button" class="button is-danger">Logout</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        {% if req.query.message %}<div class="notification is-primary">{{ req.query.message }}</div>{% endif %}
         <section class="section">
             <div class="container">
                 <nav class="navbar is-primary"

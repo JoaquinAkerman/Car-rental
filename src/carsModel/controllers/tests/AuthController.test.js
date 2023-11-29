@@ -70,6 +70,7 @@ describe("AuthController", () => {
 
   it("should render login view", () => {
     const req = {
+      session: {},
       cookies: {
         message: "Test message",
       },
@@ -84,9 +85,9 @@ describe("AuthController", () => {
 
     expect(res.render).toHaveBeenCalledWith("login", {
       message: "Test message",
+      });
     });
-  });
-
+    
   test("POST / should handle login form submission", async () => {
     const req = {
       body: { username: "admin", password: "password" },
