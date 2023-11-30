@@ -1,0 +1,81 @@
+<label for="brand">Brand:</label>
+<br>
+<input type="text"
+       id="brand"
+       name="brand"
+       value="{{ car.brand | default("") }}"
+       required>
+<br>
+<label for="model">Model:</label>
+<br>
+<input type="text"
+       id="model"
+       name="model"
+       value="{{ car.model | default("") }}"
+       required>
+<br>
+<label for="day_price">Day Price:</label>
+<br>
+<input type="number"
+       id="day_price"
+       name="day_price"
+       value="{{ car.day_price | default("") }}"
+       required>
+<br>
+<label for="year">Year:</label>
+<br>
+<input type="number"
+       id="year"
+       name="year"
+       value="{{ car.year | default(1886) }}"
+       required>
+<br>
+<label for="mileage">Mileage:</label>
+<br>
+<input type="number"
+       id="mileage"
+       name="mileage"
+       value="{{ car.mileage | default(1) }}"
+       required>
+<br>
+<label for="color">Color:</label>
+<br>
+<input type="text"
+       id="color"
+       name="color"
+       value="{{ car.color | default("") }}"
+       required>
+<br>
+<label for="passengers">Passengers:</label>
+<br>
+<input type="number"
+       id="passengers"
+       name="passengers"
+       value="{{ car.passengers | default(1) }}"
+       required>
+<br>
+<label for="air_conditioning">Air Conditioning:</label>
+<br>
+<select id="air_conditioning" name="air_conditioning">
+    <option value="Yes" {% if car.air_conditioning == 'Yes' %}selected{% endif %}>Yes</option>
+    <option value="No" {% if car.air_conditioning == 'No' %}selected{% endif %}>No</option>
+</select>
+<br>
+<label for="transmission">Transmission:</label>
+<br>
+<select id="transmission" name="transmission">
+    <option value="Automatic"
+            {% if car.transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
+    <option value="Manual"
+            {% if car.transmission == 'Manual' %}selected{% endif %}>Manual</option>
+</select>
+<br>
+<label for="panoramic_sunroof">Panoramic Sunroof:</label>
+<br>
+<select id="panoramic_sunroof" name="panoramic_sunroof">
+    <option value="Yes"
+            {% if car.panoramic_sunroof == 'Yes' %}selected{% endif %}>Yes</option>
+    <option value="No" {% if car.panoramic_sunroof == 'No' %}selected{% endif %}>No</option>
+</select>
+<br>
+<br>

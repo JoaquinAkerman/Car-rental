@@ -104,3 +104,37 @@ describe("AuthController", () => {
     expect(res.redirect).toHaveBeenCalledWith("/admin/dashboard");
   });
 });
+
+
+describe("AuthController logout", () => {
+  let authController;
+  let mockReq, mockRes;
+
+  beforeEach(() => {
+    authController = new AuthController();
+    mockReq = {
+      session: {
+        destroy: jest.fn().mockImplementation((callback) => callback()),
+      },
+    };
+    mockRes = {
+      clearCookie: jest.fn(),
+      redirect: jest.fn(),
+    };
+  });
+
+  it("should logout a user and redirect to the home page", async () => {
+    await authController.logout(mockReq, mockRes);
+    expect(mockReq.session.destroy).toHaveBeenCalled();
+    expect(mockRes.clearCookie).toHaveBeenCalledWith("sid");
+    expect(mockRes.redirect).toHaveBeenCalledWith("/");
+  });
+
+  it("should handle errors and redirect to the dashboard", async () => {
+    mockReq.session.destroy.mockImplementationOnce((callback) => callback(new Error()));
+    await authController.logout(mockReq, mockRes);
+    expect(mockRes.redirect).toHaveBeenCalledWith("/admin/dashboard");
+  });
+});
+
+

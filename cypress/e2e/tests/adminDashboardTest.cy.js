@@ -60,6 +60,7 @@ describe("Admin Dashboard Test", () => {
       cy.get('input[id="brand"]').type(`Test Brand ${i}`);
       cy.get('input[id="model"]').type(`Test ${i}`);
       cy.get('input[id="day_price"]').type(150);
+      cy.get('input[id="color"]').type(`Test Color ${i}`);
       cy.contains("Add Car").click();
       cy.contains(".notification.is-primary", "Car saved successfully");
     }
@@ -70,6 +71,7 @@ describe("Admin Dashboard Test", () => {
       cy.get('input[id="brand"]').clear().type(`Edited Test Brand ${i}`);
       cy.get('input[id="model"]').clear().type(`Edited Test ${i}`);
       cy.get('input[id="day_price"]').clear().type(200);
+      cy.get('input[id="color"]').clear().type(`Edited Test Color ${i}`);
       cy.contains("Save Changes").click();
       cy.contains(".notification.is-primary", "Car updated successfully");
     }
@@ -88,8 +90,8 @@ describe("Admin Dashboard Test", () => {
     cy.get('input[type="submit"][value="Login"]').click();
     cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
 
-     //check if the cars are rendered
-     cy.get(".box.has-background-white-ter").should("have.length", 3);
+    //check if the cars are rendered
+    cy.get(".box.has-background-white-ter").should("have.length", 3);
 
     // Check for the Toyota car details
     cy.get('.box.has-background-white-ter[data-id="1"]').then(($box) => {

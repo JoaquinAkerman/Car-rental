@@ -5,19 +5,19 @@ class CarController {
    * @param {CarGetService} CarGetService - The service for getting car information.
    * @param {AuthenticationService} AuthenticationService - The service for user authentication.
    * @param {CarUpdateService} CarUpdateService - The service for updating car information.
-   * @param {errorHandlingMiddleware} errorHandlingMiddleware - The middleware for handling errors.
+   * @param {CarValidator} CarValidator - The validator for car information.
    */
 
   constructor(
     CarGetService,
     AuthenticationService,
     CarUpdateService,
-    errorHandlingMiddleware
+    CarValidator,
   ) {
     this.CarGetService = CarGetService;
     this.AuthenticationService = AuthenticationService;
     this.CarUpdateService = CarUpdateService;
-    this.errorHandlingMiddleware = errorHandlingMiddleware;
+    this.CarValidator = CarValidator;
   }
 
   ensureLoggedIn(req, res, next) {
@@ -26,7 +26,7 @@ class CarController {
     } else {
       res.redirect("/");
     }
-  }
+   }
   async renderCarsView(req, res) {
     try {
       const cars = await this.CarGetService.getAllCars();
@@ -36,6 +36,7 @@ class CarController {
       res.status(500).send("Internal server error");
     }
   }
+
 
   async renderAdminView(req, res) {
     const message = req.cookies.message;
@@ -78,6 +79,8 @@ class CarController {
     try {
       const id = req.params.id;
       const newCarData = req.body;
+      this.CarValidator(newCarData);
+
 
       await this.CarUpdateService.updateCar(id, newCarData);
 
@@ -104,10 +107,12 @@ class CarController {
       res.redirect("/admin/dashboard");
     }
   }
-
+  
   async createCar(req, res) {
     try {
       const carData = req.body;
+      console.log(carData);
+      this.CarValidator(carData);
       await this.CarUpdateService.createCar(carData);
 
       res.cookie("message", "Car saved successfully", {
