@@ -1,7 +1,23 @@
 # Rent A Car App
 
 This is a car rental application built with Node.js, Express, sqlite3, and Bulma.
+
+The application currently supports a CRUD (Create, Read, Update, Delete) system for managing cars. Coming soon, we will be adding a rental system for users to rent cars.
 Tested with Jest and Cypress.
+
+## Key Scripts
+
+- `start`: Start the application  
+- `dev`: Start the application in development mode 
+- `test:all`: Run tests with Jest and Cypress 
+
+## Other Scripts
+- `test`: Run tests with Jest
+- `test:failures`: Run only failed tests with Jest
+- `test-watch`: Run Jest in watch mode
+- `clear-jest-cache`: Clear Jest cache
+- `start:test`: Start the application in test mode
+- `cypress:open`: Open Cypress for end-to-end testing
 
 ## Version
 
@@ -11,17 +27,6 @@ Tested with Jest and Cypress.
 
 index.js
 
-## Scripts
-
-- `start`: Start the application with `node app.js`
-- `dev`: Start the application in development mode with `nodemon app.js`
-- `test`: Run tests with Jest
-- `test:failures`: Run only failed tests with Jest
-- `test-watch`: Run Jest in watch mode
-- `clear-jest-cache`: Clear Jest cache
-- `start:test`: Start the application in test mode
-- `cypress:open`: Open Cypress for end-to-end testing
-- `test:all`: Run tests with Jest and Cypress
 ## Dependencies
 
 - bulma: ^0.9.4

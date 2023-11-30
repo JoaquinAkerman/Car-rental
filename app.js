@@ -1,11 +1,12 @@
-// Imports
 import dotenv from "dotenv";
+dotenv.config();
 import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
 import express from "express";
 import methodOverride from "method-override";
 import nunjucks from "nunjucks";
+import open from "open";
 import session from "express-session";
+
 import configureDI from "./src/carsModel/container/container.js";
 import registerRoutes from "./src/routes/routes.js";
 
@@ -14,9 +15,10 @@ const app = express();
 const viewsPath = "./views";
 const port =
   process.env.NODE_ENV === "test" ? process.env.TEST_PORT : process.env.PORT;
+
 // Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 app.use(
@@ -29,7 +31,6 @@ app.use(
 );
 
 // Configurations
-dotenv.config();
 app.set("view engine", "njk");
 nunjucks.configure(viewsPath, {
   autoescape: true,
@@ -46,7 +47,17 @@ const controllers = [
 ];
 registerRoutes(app, controllers);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
+  if (process.env.NODE_ENV !== "test") {
+    open(`http://localhost:${port}`).catch(console.error);
+  }
 });
+//

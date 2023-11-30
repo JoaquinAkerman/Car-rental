@@ -21,9 +21,11 @@ module.exports = {
     ecmaVersion: 2021,
     sourceType: "module",
   },
-  rules: {},
+  rules: {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+  },
   globals: {
-    "Cypress": "readonly",
-    "cy": "readonly"
-  }
+    Cypress: "readonly",
+    cy: "readonly",
+  },
 };

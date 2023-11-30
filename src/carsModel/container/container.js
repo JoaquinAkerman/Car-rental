@@ -8,6 +8,7 @@ import AuthenticationService from "../servicesLayer/AuthenticationService.js";
 import CarGetService from "../servicesLayer/CarGetService.js";
 import CarUpdateService from "../servicesLayer/CarUpdateService.js";
 import CarRepository from "../repositoryLayer/CarRepository.js";
+import carValidator from "../validators/carValidator.js";
 import DatabaseService from "../infrastructure/DataBaseService.js";
 
 /**
@@ -38,10 +39,25 @@ export default function configureDI() {
     ({ AuthenticationService }) => new AuthController(AuthenticationService)
   );
 
+  container.add("carValidator", () => carValidator);
+ 
+
   container.add(
     "CarController",
-    ({ CarGetService, AuthenticationService, CarUpdateService }) =>
-      new CarController(CarGetService, AuthenticationService, CarUpdateService)
+    ({
+      CarGetService,
+      AuthenticationService,
+      CarUpdateService,
+      carValidator,
+      
+    }) =>
+      new CarController(
+        CarGetService,
+        AuthenticationService,
+        CarUpdateService,
+        carValidator,
+        
+      )
   );
 
   return container;
