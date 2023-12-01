@@ -14,14 +14,18 @@ Extensive testing has been performed using Jest and Cypress with a dedicated tes
 
 ## Diagrams
 
-L1 diagram:
-![L1 diagram](./assets/diagrams/L1-diagram.svg)
+| L1 diagram |
+|:---:|
+| ![L1 diagram](./assets/diagrams/L1-diagram.svg) |
+---
+| L2 diagram |
+|:---:|
+| ![L2 diagram](./assets/diagrams/L2-diagram.svg) |
+ ---
+| L3 diagram |
+|:---:|
+| ![L3 diagram](./assets/diagrams/L3-diagram.svg) |
 
-L2 diagram:
-![L2 diagram](./assets/diagrams/L2-diagram.svg)
-
-L3 diagram:
-![L3 diagram](./assets/diagrams/L3-diagram.svg)
 
 ## Other Scripts
 
