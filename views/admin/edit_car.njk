@@ -6,8 +6,7 @@ Edit Car
 
 {% block content %}
 <h1>Edit Car</h1>
-<form action="/cars/{{ car.id }}?_method=patch" method="post">
-   
+<form action="/admin/edit_car/{{ car.id }}?_method=patch" method="post">   
     {% include "partials/car_form.njk" %}
     
     <input type="submit" value="Save Changes" class="button is-danger mt-4">
