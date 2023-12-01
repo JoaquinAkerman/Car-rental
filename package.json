@@ -27,7 +27,7 @@
     "test-watch": "jest --watchAll",
     "clear-jest-cache": "jest --clearCache",
     "start:test": "cross-env NODE_ENV=test nodemon app.js",
-    "cypress:open": "cypress open",
+    "cypress:open": "cross-env NODE_ENV=test cypress open",
     "test:all": "concurrently \"npm run start:test\" \"npm run test\" \"npm run cypress:open\""
   },
   "keywords": [],

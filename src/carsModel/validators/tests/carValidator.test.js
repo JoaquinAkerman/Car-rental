@@ -30,6 +30,8 @@ describe("carValidator", () => {
       transmission: "Automatic",
       panoramic_sunroof: "Yes",
     };
-    expect(() => carValidator(carData)).toThrow();
+    expect(() => carValidator(carData)).toThrow(
+      'Invalid car data: "day_price" must be greater than or equal to 0'
+    );
   });
 });

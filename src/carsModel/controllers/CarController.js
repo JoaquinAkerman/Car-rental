@@ -12,7 +12,7 @@ class CarController {
     CarGetService,
     AuthenticationService,
     CarUpdateService,
-    CarValidator,
+    CarValidator
   ) {
     this.CarGetService = CarGetService;
     this.AuthenticationService = AuthenticationService;
@@ -26,7 +26,7 @@ class CarController {
     } else {
       res.redirect("/");
     }
-   }
+  }
   async renderCarsView(req, res) {
     try {
       const cars = await this.CarGetService.getAllCars();
@@ -36,7 +36,6 @@ class CarController {
       res.status(500).send("Internal server error");
     }
   }
-
 
   async renderAdminView(req, res) {
     const message = req.cookies.message;
@@ -81,7 +80,6 @@ class CarController {
       const newCarData = req.body;
       this.CarValidator(newCarData);
 
-
       await this.CarUpdateService.updateCar(id, newCarData);
 
       res.cookie("message", "Car updated successfully");
@@ -107,7 +105,7 @@ class CarController {
       res.redirect("/admin/dashboard");
     }
   }
-  
+
   async createCar(req, res) {
     try {
       const carData = req.body;
@@ -140,7 +138,7 @@ class CarController {
       this.renderEditCarView(req, res)
     );
     app.get("/admin/add", (req, res) => this.renderAddCarView(req, res));
-    app.patch("/cars/:id", (req, res) => this.updateCar(req, res));
+    app.patch("/admin/edit_car/:id", (req, res) => this.updateCar(req, res));
     app.post("/admin/add", (req, res) => this.createCar(req, res));
     app.delete("/admin/delete/:id", (req, res) => this.deleteCar(req, res));
   }

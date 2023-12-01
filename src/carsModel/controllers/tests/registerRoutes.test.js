@@ -46,10 +46,10 @@ describe("CarController", () => {
         });
     });
 
-    it("should respond to a PATCH request at the /cars/:id route", () => {
+    it("should respond to a PATCH request at the /admin/edit_car/:id route", () => {
       carController.updateCar = jest.fn((req, res) => res.sendStatus(200));
       return request
-        .patch("/cars/:id")
+        .patch("/admin/edit_car/:id")
         .expect(200)
         .then(() => {
           expect(carController.updateCar).toHaveBeenCalled();
