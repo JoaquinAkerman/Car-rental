@@ -21,7 +21,7 @@ class CarController {
   }
 
   ensureLoggedIn(req, res, next) {
-    if (req.session.admin) {
+    if (req.session && req.session.admin) {
       console.log("req.session.admin is true", req.session.admin);
       next();
     } else {
