@@ -26,9 +26,9 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { 
-      secure: false, 
-      sameSite: 'lax'
+    cookie: {
+      secure: false,
+      sameSite: "lax",
     },
   })
 );
@@ -57,10 +57,15 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(port, () => {
+function openBrowser(url) {
+  open(url).catch(console.error);
+}
+
+app.listen(port || 3000, () => {
   console.log(`Server listening at http://localhost:${port}`);
+
   if (process.env.NODE_ENV !== "test") {
-    open(`http://localhost:${port}`).catch(console.error);
+    const serverUrl = `http://localhost:${port}`;
+    openBrowser(serverUrl);
   }
 });
-//
