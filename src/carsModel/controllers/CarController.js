@@ -21,17 +21,14 @@ class CarController {
   }
 
   ensureLoggedIn(req, res, next) {
-    console.log("Checking if user is logged in");
-
-    if (req.isAuthenticated()) {
-      console.log("User is authenticated");
-      return next();
+    if (req.session.admin) {
+      console.log("req.session.admin is true", req.session.admin);
+      next();
+    } else {
+      console.log("req.session.admin is false", req.session.admin);
+      res.redirect("/");
     }
-
-    console.log("User is not authenticated, redirecting to login page");
-    res.redirect("/login");
   }
-
   async renderCarsView(req, res) {
     try {
       const cars = await this.CarGetService.getAllCars();
