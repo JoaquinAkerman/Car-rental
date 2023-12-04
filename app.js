@@ -26,7 +26,10 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // set to true if your application is served over HTTPS
+    cookie: { 
+      secure: false, 
+      sameSite: 'lax'
+    },
   })
 );
 
