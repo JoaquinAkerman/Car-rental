@@ -25,7 +25,7 @@ class AuthController {
       res.cookie("message", "Invalid username or password", {
         maxAge: 1000,
         sameSite: "lax",
-        secure: false,
+        secure: true,
       });
 
       res.redirect("/");
