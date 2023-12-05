@@ -15,22 +15,7 @@ class AuthController {
     res.render("login", { message, loggedIn: req.session.admin });
   }
 
-  handleLoginFormSubmission(req, res) {
-    const { username, password } = req.body;
-
-    if (this.authService.validateUser(username, password)) {
-      req.session.admin = true;
-      res.redirect("/admin/dashboard");
-    } else {
-      res.cookie("message", "Invalid username or password", {
-        maxAge: 1000,
-        sameSite: "lax",
-        secure: true,
-      });
-
-      res.redirect("/");
-    }
-  }
+ 
   async logout(req, res) {
     req.session.destroy((err) => {
       if (err) {
@@ -44,7 +29,6 @@ class AuthController {
 
   registerRoutes(app) {
     app.get("/", (req, res) => this.renderLoginView(req, res));
-    app.post("/", (req, res) => this.handleLoginFormSubmission(req, res));
     app.post("/logout", (req, res) => this.logout(req, res));
   }
 }

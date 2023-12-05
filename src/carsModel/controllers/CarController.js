@@ -20,14 +20,9 @@ class CarController {
     this.CarValidator = CarValidator;
   }
 
-  ensureLoggedIn(req, res, next) {
-    if (req.session && req.session.admin) {
-      console.log("req.session.admin is true", req.session.admin);
-      next();
-    } else {
-      console.log("req.session.admin is false", req.session.admin);
-      res.redirect("/");
-    }
+  async loginAsAdmin(req, res) {
+    req.session.admin = true;
+    res.redirect("/admin/dashboard");
   }
   async renderCarsView(req, res) {
     try {
@@ -132,9 +127,6 @@ class CarController {
   }
   registerRoutes(app) {
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
-    app.all("/admin/*", (req, res, next) =>
-      this.ensureLoggedIn(req, res, next)
-    );
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
     app.get("/admin/edit_car/:id", (req, res) =>
       this.renderEditCarView(req, res)
