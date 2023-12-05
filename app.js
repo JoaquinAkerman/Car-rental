@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import methodOverride from "method-override";
 import nunjucks from "nunjucks";
-import open from "open";
 import session from "express-session";
 
 import configureDI from "./src/carsModel/container/container.js";
@@ -29,6 +28,7 @@ app.use(
     cookie: {
       secure: false,
       sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     },
   })
 );
@@ -57,15 +57,10 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-function openBrowser(url) {
-  open(url).catch(console.error);
-}
+
 
 app.listen(port || 3000, () => {
   console.log(`Server listening at http://localhost:${port}`);
 
-  if (process.env.NODE_ENV !== "test") {
-    const serverUrl = `http://localhost:${port}`;
-    openBrowser(serverUrl);
-  }
+  
 });

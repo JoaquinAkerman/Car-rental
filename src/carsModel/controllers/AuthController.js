@@ -22,20 +22,23 @@ class AuthController {
       req.session.admin = true;
       res.redirect("/admin/dashboard");
     } else {
-      res.cookie("message", "Invalid username or password", { maxAge: 1000 });
+      res.cookie("message", "Invalid username or password", {
+        maxAge: 1000,
+        sameSite: "lax",
+        secure: false,
+      });
 
       res.redirect("/");
     }
   }
-
   async logout(req, res) {
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
-        return res.redirect('/admin/dashboard');
+        return res.redirect("/admin/dashboard");
       }
-  
-      res.clearCookie('sid');
-      res.redirect('/');
+
+      res.clearCookie("sid");
+      res.redirect("/");
     });
   }
 
