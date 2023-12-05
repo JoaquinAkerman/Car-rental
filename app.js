@@ -60,7 +60,7 @@ app.use((err, req, res, next) => {
 
 
 app.listen(port || 3000, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server listening at http://localhost:${port} at time ${new Date()} `);
 
   
 });
