@@ -6,50 +6,28 @@ describe("Admin Dashboard Test", () => {
     cy.exec("node ./cypress/e2e/tests/testUtils/resetDatabase.js");
   });
 
-  it("It should not login with incorrect credentials", () => {
-    cy.visit(`${BASE_URL}${TEST_PORT}`);
-    cy.get('input[id="username"]').type("wrongusername");
-    cy.get('input[id="password"]').type("wrongpassword");
-    cy.get('input[type="submit"][value="Login"]').click();
-    cy.url().should("eq", `http://localhost:${TEST_PORT}/`);
-    cy.get(".notification.is-danger")
-      .should("exist")
-      .and("contain", "Invalid username or password");
-  });
-
-  it("It should visit the login page", () => {
-    cy.visit(`${BASE_URL}${TEST_PORT}/`);
-    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/`);
-    cy.get("nav").should("exist");
-    cy.get("strong").should("exist");
-    cy.get("strong").should("have.text", "Home");
-    cy.get('a.navbar-item[href="/cars"]').should("have.text", "Cars");
-    cy.get("h1").should("have.text", "Car Rental");
-    cy.get('input[id="username"]').should("exist");
-    cy.get('input[id="password"]').should("exist");
-    cy.get('input[type="submit"][value="Login"]').should("exist");
-  });
-
   it("It should login and render the admin dashboard", () => {
     cy.visit(`http://localhost:${TEST_PORT}/`);
-    cy.get('input[id="username"]').type("admin");
-    cy.get('input[id="password"]').type("admin");
-    cy.get('input[type="submit"][value="Login"]').click();
+    cy.get('a.button.is-primary.mt-3:contains("Login as Admin")').should(
+      "exist"
+    );
+    cy.get('a.button.is-primary.mt-3:contains("Login as Admin")').click();
+
     cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
     cy.get("h1").should("have.text", "Car Rental");
     cy.get("h2").should("contain", "Dashboard");
     cy.get("h2").should("contain", "Cars");
   });
-
   it("It should add several cars, edit them, and then delete them", () => {
     //if you want to add more cars, change the number of cars here
     //limit is 50 cars because the redirection limit is 50 on cypress.config.js
 
     //Login to admin dashboard
     cy.visit(`${BASE_URL}${TEST_PORT}`);
-    cy.get('input[id="username"]').type("admin");
-    cy.get('input[id="password"]').type("admin");
-    cy.get('input[type="submit"][value="Login"]').click();
+    cy.get('a.button.is-primary.mt-3:contains("Login as Admin")').should(
+      "exist"
+    );
+    cy.get('a.button.is-primary.mt-3:contains("Login as Admin")').click();
     cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
     const numberOfCars = 3;
 
@@ -83,13 +61,13 @@ describe("Admin Dashboard Test", () => {
     }
   });
 
-  it("should check if the example cars are in the database , and logout", () => {
+  it("should check if the example cars are in the database", () => {
     cy.visit(`${BASE_URL}${TEST_PORT}`);
-    cy.get('input[id="username"]').type("admin");
-    cy.get('input[id="password"]').type("admin");
-    cy.get('input[type="submit"][value="Login"]').click();
-    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/admin/dashboard`);
 
+    cy.get('a.button.is-link.mt-3:contains("View Cars")')
+      .should("exist")
+      .click();
+    cy.url().should("eq", `${BASE_URL}${TEST_PORT}/cars`);
     //check if the cars are rendered
     cy.get(".box.has-background-white-ter").should("have.length", 3);
 
@@ -141,12 +119,7 @@ describe("Admin Dashboard Test", () => {
       box.get("p").should("contain", "Panoramic sunroof: No");
     });
 
-    cy.get('button[id="logout-button"]').click();
+    cy.get('a.navbar-item.ml-5:contains("Home")').click();
     cy.url().should("eq", `${BASE_URL}${TEST_PORT}/`);
-    // Check if the login form is displayed
-
-    cy.get('input[id="username"]').should("be.visible");
-    cy.get('input[id="password"]').should("be.visible");
-    cy.get('input[type="submit"][value="Login"]').should("be.visible");
   });
 });

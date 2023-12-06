@@ -46,7 +46,6 @@ nunjucks.configure(viewsPath, {
 const container = configureDI();
 const controllers = [
   container.get("CarController"),
-  container.get("AuthController"),
 ];
 registerRoutes(app, controllers);
 

@@ -3,21 +3,21 @@ class CarController {
    * Initializes the constructor with the provided services.
    *
    * @param {CarGetService} CarGetService - The service for getting car information.
-   * @param {AuthenticationService} AuthenticationService - The service for user authentication.
    * @param {CarUpdateService} CarUpdateService - The service for updating car information.
    * @param {CarValidator} CarValidator - The validator for car information.
    */
 
-  constructor(
-    CarGetService,
-    AuthenticationService,
-    CarUpdateService,
-    CarValidator
-  ) {
+  constructor(CarGetService, CarUpdateService, CarValidator) {
     this.CarGetService = CarGetService;
-    this.AuthenticationService = AuthenticationService;
     this.CarUpdateService = CarUpdateService;
     this.CarValidator = CarValidator;
+  }
+
+  renderLoginView(req, res) {
+    const message = req.cookies.message;
+    res.clearCookie("message");
+
+    res.render("login", { message, loggedIn: req.session.admin });
   }
 
   async loginAsAdmin(req, res) {
@@ -55,7 +55,7 @@ class CarController {
       res.status(500).send("Internal server error");
     }
   }
-
+//
   async renderEditCarView(req, res) {
     try {
       const id = req.params.id;
@@ -125,7 +125,20 @@ class CarController {
       res.redirect(`/admin/dashboard`);
     }
   }
+
+  async logout(req, res) {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.redirect("/admin/dashboard");
+      }
+
+      res.clearCookie("sid");
+      res.redirect("/");
+    });
+  }
   registerRoutes(app) {
+    app.get("/", (req, res) => this.renderLoginView(req, res));
+
     app.get("/cars", (req, res) => this.renderCarsView(req, res));
     app.get("/admin/dashboard", (req, res) => this.renderAdminView(req, res));
     app.get("/admin/edit_car/:id", (req, res) =>
@@ -135,6 +148,7 @@ class CarController {
     app.patch("/admin/edit_car/:id", (req, res) => this.updateCar(req, res));
     app.post("/admin/add", (req, res) => this.createCar(req, res));
     app.delete("/admin/delete/:id", (req, res) => this.deleteCar(req, res));
+    app.post("/logout", (req, res) => this.logout(req, res));
   }
 }
 //
