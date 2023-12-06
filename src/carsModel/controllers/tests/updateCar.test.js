@@ -1,62 +1,57 @@
 import CarController from "../CarController";
 
 describe("CarController", () => {
-  let carController;
-  let mockReq, mockRes;
-
-  beforeEach(() => {
-    const mockCarUpdateService = {
-      updateCar: jest.fn(),
+  test("should update a car and redirect to the dashboard", async () => {
+    const id = "testId";
+    const newCarData = {
+      /* your car data here */
     };
-    const mockCarValidator = jest.fn();
-    carController = new CarController(null, null, mockCarUpdateService, mockCarValidator);
-    mockReq = {
-      params: {
-        id: "1",
-      },
-      body: {
-        brand: "Test Brand",
-        model: "Test Model",
-        day_price: 100,
-        year: 2020,
-        mileage: 10000,
-        color: "red",
-        air_conditioning: "Yes",
-        transmission: "Automatic",
-        panoramic_sunroof: "Yes",
-      },
-    };
-    mockRes = {
+    const req = { params: { id }, body: newCarData };
+    const res = {
       cookie: jest.fn(),
       redirect: jest.fn(),
     };
-  });
 
-  it("should update a car and redirect to the dashboard", async () => {
-    await carController.updateCar(mockReq, mockRes);
-    expect(carController.CarValidator).toHaveBeenCalledWith(
-      mockReq.body
-    );
+    const carController = new CarController();
+    carController.CarValidator = jest.fn();
+    carController.CarUpdateService = {
+      updateCar: jest.fn().mockResolvedValue(),
+    };
+
+    await carController.updateCar(req, res);
+
+    expect(carController.CarValidator).toHaveBeenCalledWith(newCarData);
     expect(carController.CarUpdateService.updateCar).toHaveBeenCalledWith(
-      mockReq.params.id,
-      mockReq.body
+      id,
+      newCarData
     );
-    expect(mockRes.cookie).toHaveBeenCalledWith(
+    expect(res.cookie).toHaveBeenCalledWith(
       "message",
       "Car updated successfully"
     );
-    expect(mockRes.redirect).toHaveBeenCalledWith("/admin/dashboard");
+    expect(res.redirect).toHaveBeenCalledWith("/admin/dashboard");
   });
 
-  it("should handle errors and redirect to the dashboard", async () => {
-    carController.CarUpdateService.updateCar.mockImplementationOnce(() => {
-      throw new Error();
-    });
-    await carController.updateCar(mockReq, mockRes);
-    expect(mockRes.cookie).toHaveBeenCalledWith(
-      "message",
-      "Internal server error"
-    );
-    expect(mockRes.redirect).toHaveBeenCalledWith("/admin/dashboard");
+  test("should handle errors", async () => {
+    const id = "testId";
+    const newCarData = {
+      /* your car data here */
+    };
+    const req = { params: { id }, body: newCarData };
+    const res = {
+      cookie: jest.fn(),
+      redirect: jest.fn(),
+    };
+
+    const carController = new CarController();
+    carController.CarValidator = jest.fn();
+    carController.CarUpdateService = {
+      updateCar: jest.fn().mockRejectedValue(new Error("Test error")),
+    };
+
+    await carController.updateCar(req, res);
+
+    expect(res.cookie).toHaveBeenCalledWith("message", "Internal server error");
+    expect(res.redirect).toHaveBeenCalledWith("/admin/dashboard");
   });
 });

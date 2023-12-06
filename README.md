@@ -6,6 +6,8 @@ Current functionality includes a CRUD (Create, Read, Update, Delete) system for 
 
 Extensive testing has been performed using Jest and Cypress with a dedicated testing database.
 
+[Demo Here](https://car-rental-7ti5e.ondigitalocean.app/)
+
 ## Key Scripts
 
 - `start`: Start the application
@@ -50,7 +52,8 @@ cd Car-rental
 npm install
 ```
 
-3. **Environment Variables**: Rename the .env.dist file to .env. This file contains the environment variables necessary for running the application.
+3. **Environment Variables**: Rename the .env.dist file to .env 
+    This file contains the environment variables necessary for running the application.
 
 4. **Start the application**: Run the `start` script to start the application.
 
@@ -58,15 +61,16 @@ npm install
 npm run start
 ```
 
-    OR
+    
 
+    OR
+    
 5. **Start the application in development mode**: Run the `dev` script to start the application in development mode.
 
 ```bash
 npm run dev
 ```
-
-    OR
+  OR
 
 6. **Start the application in test mode**: Run the `test:all` script to start the application in test mode.
 

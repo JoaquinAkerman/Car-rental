@@ -1,34 +1,37 @@
-import CarController from '../CarController.js';
-
+import CarController from '../CarController'; 
 describe('CarController', () => {
-  let carController;
-  let mockReq, mockRes;
-
-  beforeEach(() => {
-    const mockCarUpdateService = {
-      deleteCar: jest.fn(),
-    };
-    carController = new CarController(null, null, mockCarUpdateService);
-    mockReq = {
-      params: { id: 1 },
-    };
-    mockRes = {
+  test('should delete a car and redirect to the dashboard', async () => {
+    const id = 'testId';
+    const req = { params: { id } };
+    const res = {
       cookie: jest.fn(),
       redirect: jest.fn(),
     };
+
+    const carController = new CarController();
+    carController.CarUpdateService = { deleteCar: jest.fn().mockResolvedValue() };
+
+    await carController.deleteCar(req, res);
+
+    expect(carController.CarUpdateService.deleteCar).toHaveBeenCalledWith(id);
+    expect(res.cookie).toHaveBeenCalledWith("message", "Car deleted successfully");
+    expect(res.redirect).toHaveBeenCalledWith('/admin/dashboard');
   });
 
-  it('should delete a car and redirect to the dashboard', async () => {
-    await carController.deleteCar(mockReq, mockRes);
-    expect(carController.CarUpdateService.deleteCar).toHaveBeenCalledWith(mockReq.params.id);
-    expect(mockRes.cookie).toHaveBeenCalledWith('message', 'Car deleted successfully');
-    expect(mockRes.redirect).toHaveBeenCalledWith('/admin/dashboard');
-  });
+  test('should handle errors', async () => {
+    const id = 'testId';
+    const req = { params: { id } };
+    const res = {
+      cookie: jest.fn(),
+      redirect: jest.fn(),
+    };
 
-  it('should handle errors and redirect to the dashboard', async () => {
-    carController.CarUpdateService.deleteCar.mockImplementationOnce(() => { throw new Error(); });
-    await carController.deleteCar(mockReq, mockRes);
-    expect(mockRes.cookie).toHaveBeenCalledWith('message', 'Internal server error');
-    expect(mockRes.redirect).toHaveBeenCalledWith('/admin/dashboard');
+    const carController = new CarController();
+    carController.CarUpdateService = { deleteCar: jest.fn().mockRejectedValue(new Error('Test error')) };
+
+    await carController.deleteCar(req, res);
+
+    expect(res.cookie).toHaveBeenCalledWith("message", "Internal server error");
+    expect(res.redirect).toHaveBeenCalledWith('/admin/dashboard');
   });
 });

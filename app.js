@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import methodOverride from "method-override";
 import nunjucks from "nunjucks";
-import open from "open";
 import session from "express-session";
 
 import configureDI from "./src/carsModel/container/container.js";
@@ -26,7 +25,11 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // set to true if your application is served over HTTPS
+    cookie: {
+      secure: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
   })
 );
 
@@ -43,7 +46,6 @@ nunjucks.configure(viewsPath, {
 const container = configureDI();
 const controllers = [
   container.get("CarController"),
-  container.get("AuthController"),
 ];
 registerRoutes(app, controllers);
 
@@ -54,10 +56,10 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-  if (process.env.NODE_ENV !== "test") {
-    open(`http://localhost:${port}`).catch(console.error);
-  }
+
+
+app.listen(port || 3000, () => {
+  console.log(`Server listening at http://localhost:${port} at time ${new Date()} `);
+
+  
 });
-//
