@@ -1,0 +1,133 @@
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #2c3e50;
+  text-transform: uppercase;
+  font-family: "Arial", sans-serif;
+  font-size: 2.5em;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+.navbar {
+  background-color: #3498db;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-item {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.navbar-item:hover {
+  background-color: #2980b9;
+}
+
+h2 {
+  color: #3498db;
+  text-transform: uppercase;
+  font-family: "Arial", sans-serif;
+  font-size: 2em;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.content {
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.button {
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 4px;
+  text-decoration: none; 
+  font-size: 1em; 
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #2980b9; 
+}
+
+p {
+  color: #2c3e50; /* Change the color */
+  font-family: 'Arial', sans-serif; /* Change the font */
+  font-size: 1em; /* Set the font size */
+  margin-bottom: 10px; /* Add some margin at the bottom */
+}
+
+p strong {
+  font-weight: bold; /* Make the text bold */
+  margin-right: 5px; /* Add some margin to the right */
+}
+
+.buttons {
+  display: flex; /* Align the buttons horizontally */
+  margin-top: 20px; /* Add some margin at the top */
+}
+
+.button {
+  background-color: #3498db; /* Change the background color */
+  color: #ffffff; /* Change the text color */
+  padding: 10px 20px; /* Add some padding */
+  border: none; /* Remove the border */
+  border-radius: 4px; /* Add rounded corners */
+  text-decoration: none; /* Remove the underline */
+  font-size: 1em; /* Set the font size */
+  transition: background-color 0.3s ease; /* Add a transition for the background color */
+}
+
+.button:hover {
+  background-color: #2980b9; /* Change the background color when hovering */
+}
+
+.button.is-warning {
+  background-color: #f39c12; /* Change the background color */
+}
+
+.button.is-warning:hover {
+  background-color: #d35400; /* Change the background color when hovering */
+}
+
+.button.is-danger {
+  background-color: #e74c3c; /* Change the background color */
+}
+
+.button.is-danger:hover {
+  background-color: #c0392b; /* Change the background color when hovering */
+}
+
+.box {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  background-color: #e8f5e9; /* Light green */
+
+
+}
+
+.box p {
+  margin: 0 0 10px;
+  line-height: 1.5;
+  padding: 10px 0; /* Add some vertical padding */
+
+}
