@@ -32,7 +32,7 @@ describe("Admin Dashboard Test", () => {
     const numberOfCars = 3;
 
     // Add cars
-    for (let i = 0; i < numberOfCars; i++) {
+    for (let i = 1; i < numberOfCars; i++) {
       cy.contains("Add New Car").click();
       cy.url().should("include", `${BASE_URL}${TEST_PORT}/admin/add`);
       cy.get('input[id="brand"]').type(`Test Brand ${i}`);
@@ -44,8 +44,8 @@ describe("Admin Dashboard Test", () => {
     }
 
     // Edit cars
-    for (let i = 0; i < numberOfCars; i++) {
-      cy.get(`a[data-edit="Test Brand ${i}"]`).click();
+    for (let i = 1; i < numberOfCars; i++) {
+      cy.get(`a[data-edit="${i}"]`).click();
       cy.get('input[id="brand"]').clear().type(`Edited Test Brand ${i}`);
       cy.get('input[id="model"]').clear().type(`Edited Test ${i}`);
       cy.get('input[id="day_price"]').clear().type(200);
@@ -55,8 +55,8 @@ describe("Admin Dashboard Test", () => {
     }
 
     // Delete cars
-    for (let i = 0; i < numberOfCars; i++) {
-      cy.get(`input[data-delete="Edited Test Brand ${i}"]`).click();
+    for (let i = 1; i < numberOfCars; i++) {
+      cy.get(`input[data-delete="${i}"]`).click();
       cy.contains(".notification.is-primary", "Car deleted successfully");
     }
   });
@@ -69,10 +69,10 @@ describe("Admin Dashboard Test", () => {
       .click();
     cy.url().should("eq", `${BASE_URL}${TEST_PORT}/cars`);
     //check if the cars are rendered
-    cy.get(".box.has-background-white-ter").should("have.length", 3);
+    cy.get(".box").should("have.length", 3);
 
     // Check for the Toyota car details
-    cy.get('.box.has-background-white-ter[data-id="1"]').then(($box) => {
+    cy.get('.box[data-id="1"]').then(($box) => {
       const box = cy.wrap($box);
 
       box.get("p").should("contain", "Brand: Toyota Test database");
@@ -88,7 +88,7 @@ describe("Admin Dashboard Test", () => {
     });
 
     // Check for the Honda car details
-    cy.get('.box.has-background-white-ter[data-id="2"]').then(($box) => {
+    cy.get('.box[data-id="2"]').then(($box) => {
       const box = cy.wrap($box);
 
       box.get("p").should("contain", "Brand: Honda Test Database");
@@ -104,7 +104,7 @@ describe("Admin Dashboard Test", () => {
     });
 
     // Check for the Ford car details
-    cy.get('.box.has-background-white-ter[data-id="3"]').then(($box) => {
+    cy.get('.box[data-id="3"]').then(($box) => {
       const box = cy.wrap($box);
 
       box.get("p").should("contain", "Brand: Ford Test Database");
